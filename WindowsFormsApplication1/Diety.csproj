@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\Actie.cs" />
+    <Compile Include="classes\Gebouw.cs" />
     <Compile Include="classes\Technologie.cs" />
     <Compile Include="diety.cs">
       <SubType>Form</SubType>
@@ -81,12 +82,13 @@
     <Compile Include="diety.Designer.cs">
       <DependentUpon>diety.cs</DependentUpon>
     </Compile>
-    <Compile Include="helpers\ActieLibrary.cs" />
+    <Compile Include="helpers\Library\ActieLibrary.cs" />
     <Compile Include="helpers\Enums.cs" />
     <Compile Include="classes\Geloof.cs" />
     <Compile Include="classes\Grondstof.cs" />
     <Compile Include="helpers\Helpers.cs" />
-    <Compile Include="helpers\TechnologieLibrary.cs" />
+    <Compile Include="helpers\Library\GebouwLibrary.cs" />
+    <Compile Include="helpers\Library\TechnologieLibrary.cs" />
     <Compile Include="helpers\Updater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +130,8 @@
     <Content Include="Resources\icons\iconvolger.png" />
     <Content Include="Resources\man-blauw-dood.png" />
     <Content Include="Resources\man-blauw.png" />
+    <Content Include="Resources\man-blauw2.png" />
+    <Content Include="Resources\man-blauw3.png" />
     <Content Include="Resources\vrouw-blauw-dood.png" />
     <Content Include="Resources\vrouw-blauw.png" />
   </ItemGroup>

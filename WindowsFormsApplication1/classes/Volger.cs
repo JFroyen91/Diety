@@ -15,6 +15,8 @@ namespace Diety.classes
         public List<Stat> Stats { get; set; }
         public string Naam { get; set; }
         public Enums.Geslacht Geslacht { get; set; }
+        public Enums.GeloofNiveau GeloofNiveau{get;set;}
+
         public Actie Actie { get; set; }
         public Geloof Geloof { get; set; }
         public Random Randomgen { get; set; }
@@ -28,8 +30,17 @@ namespace Diety.classes
             if (!Levend)
             {
                 tekst += Naam + " is gestorven.";
-                Visual.Picture.Image = Geslacht == Enums.Geslacht.Man ? Resources.man_blauw_dood : Resources.vrouw_blauw_dood;
-                Visual.Picture.Update();
+                Visual.Images = Geslacht == Enums.Geslacht.Man ? new Image[] 
+                {   Resources.man_blauw_dood,
+                    Resources.man_blauw_dood,
+                    Resources.man_blauw_dood,
+                    Resources.man_blauw_dood} : 
+                new Image[] 
+                { Resources.vrouw_blauw_dood,
+                    Resources.vrouw_blauw_dood,
+                    Resources.vrouw_blauw_dood,
+                    Resources.vrouw_blauw_dood };
+                NextImage(0);
             }
             else
             {
@@ -50,7 +61,12 @@ namespace Diety.classes
             return tekst;
         }
 
-        
+        public void NextImage(int counter)
+        {
+            Visual.Picture.Image = Visual.Images[counter];
+            Visual.Picture.Update();
+        }
+
         public string VoerActieUit()
         {
             if (Actie == null || Actie.Lengte <= 0) { Actie = Actie.KiesActie(this); }
@@ -58,7 +74,6 @@ namespace Diety.classes
             Geloof.Update(Actie.Profijt);
             return Actie.Text;
         }
-
         internal void UpdateStats(List<Cost> Costs)
         {
             if (Costs == null)
@@ -70,7 +85,6 @@ namespace Diety.classes
                 
             
         }
-
         public void SetStat(Enums.Stats stat , int waarde)
         {
             Stats.FirstOrDefault(x => x.StatType == stat).Waarde = waarde;
@@ -95,26 +109,46 @@ namespace Diety.classes
         public Rectangle Hp { get; set; }
         public Rectangle Honger { get; set; }
         public Label NaamVisueel { get; set; }
+        public Image[] Images { get; set; }
 
-        public Visual(int x, int y, int lengtehp, Enums.Geslacht geslacht , string naam)
+        public int PictureCounter = 0;
+
+        public Visual(int x, int y, int lengtehp, Enums.Geslacht geslacht, string naam)
         {
             Picture = new PictureBox
             {
                 Size = new Size(50, 40),
                 BackgroundImageLayout = ImageLayout.Center,
-                Image = Resources.man_blauw,
                 Visible = true,
-                Location = new Point(x, y)
+                Location = new Point(x, y),
+
             };
             if (geslacht == Enums.Geslacht.Vrouw)
-                Picture.Image = Resources.vrouw_blauw;
-           //Visual.Anchor = AnchorStyles.Left;
-            NaamVisueel = new Label{ Location =  new Point(x + 5, y + 50) ,Size = new Size(50 , 15) , Text = naam };
+            {
+                Images = new Image[]
+                {
+                    Resources.vrouw_blauw,
+                    Resources.vrouw_blauw,
+                    Resources.vrouw_blauw,
+                    Resources.vrouw_blauw
+                };
+            }
+            else
+            {
+                Images = new Image[]
+                {
+                    Resources.man_blauw,
+                    Resources.man_blauw2,
+                    Resources.man_blauw,
+                    Resources.man_blauw3
+                };
+            }
+            Picture.Image = Images[0];
+
+        NaamVisueel = new Label{ Location =  new Point(x + 5, y + 50) ,Size = new Size(50 , 15) , Text = naam };
             Hp = new Rectangle { Location = new Point(x + 5, y + 75), Size = new Size(40 * lengtehp / 100, 10) };
             Honger = new Rectangle { Location = new Point(x+5, y + 90), Size = new Size(40, 10) };
         }
-
-       
     }
 
     public class Stat

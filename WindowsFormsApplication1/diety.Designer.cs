@@ -199,9 +199,10 @@
             // pnlView
             // 
             this.pnlView.AutoSize = true;
+            this.pnlView.BackColor = System.Drawing.Color.Transparent;
             this.pnlView.Location = new System.Drawing.Point(167, 46);
             this.pnlView.Name = "pnlView";
-            this.pnlView.Size = new System.Drawing.Size(519, 261);
+            this.pnlView.Size = new System.Drawing.Size(519, 135);
             this.pnlView.TabIndex = 6;
             this.pnlView.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlViewPaint);
             // 

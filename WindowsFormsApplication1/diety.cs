@@ -22,7 +22,8 @@ namespace Diety
         public int Ticks { get; set; }
         public int TijdVerstreken { get; set; }
         public bool Gewonnen { get; set; }
-
+        public int ImageTimer = 1;
+        
         public Game()
         {
             Ticks = 0;
@@ -37,24 +38,27 @@ namespace Diety
             Fullscreen(); 
         }
 
-        private void pnlViewPaint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void pnlViewPaint(object sender, PaintEventArgs e)
         {
-            pnlView.Controls.Clear();
             if (MijnGeloof != null)
             {
-               
-                foreach (var v in MijnGeloof.Volgers)
+
+                Parallel.ForEach(MijnGeloof.Volgers, (v) =>
                 {
-                    e.Graphics.DrawImage(v.Visual.Picture.Image , v.Visual.Picture.Location);
-                    e.Graphics.FillRectangle(new SolidBrush(Color.Red), v.Visual.Hp);
-                    e.Graphics.DrawRectangle( new Pen(Color.Black , 2),new Rectangle(v.Visual.Hp.Location , new Size(40, 10)));
-                    e.Graphics.FillRectangle(new SolidBrush(Color.Green), v.Visual.Honger);
-                    e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Honger.Location, new Size(40, 10)));
-                    e.Graphics.DrawString(v.Visual.NaamVisueel.Text,DefaultFont,new SolidBrush(Color.Black),v.Visual.NaamVisueel.Location);
-                }
-                
+                    lock (e)
+                    {
+                        e.Graphics.DrawImage(v.Visual.Picture.Image, v.Visual.Picture.Location);
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Red), v.Visual.Hp);
+                        e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Hp.Location, new Size(40, 10)));
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Green), v.Visual.Honger);
+                        e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Honger.Location, new Size(40, 10)));
+                        e.Graphics.DrawString(v.Visual.NaamVisueel.Text, new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Black),
+                            v.Visual.NaamVisueel.Location);
+                    }
+                });
+
             }
-            //pnlView.Controls.AddRange(controls.ToArray());
+            
         }
 
         private void Fullscreen()
@@ -73,7 +77,11 @@ namespace Diety
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (!Gewonnen)
-            UpdateGeloof();
+            {
+                UpdateGeloof();
+                UpdateImages();
+                TijdVerstreken += 1;
+            }
         }
 
         void UpdateGeloof()
@@ -101,12 +109,25 @@ namespace Diety
             if (xp >= 10 && !pnlTech.Visible)
             {
                 pnlTech.Show();
-                var voedselverzamelen = TechnologieLibrary.VoedselVerzamelenTechnologie();
-                pnlTech.Controls.Add(voedselverzamelen.Visual.btn);
-                MijnGeloof.BeschikbareTechnologieen.Add(voedselverzamelen);
+            }
+            if (xp >= 10)
+            {
+                foreach (var t in MijnGeloof.AlleTechnologieen)
+                {
+                    var actief = t.getActiefNiveau();
+                    if (actief == null){continue;}
+                    if (actief.XPNodig <= xp && !t.Visual.Toegevoegd)
+                    {
+                        t.Beschikbaar = true;
+                        t.Visual.Toegevoegd = true;
+                        pnlTech.Controls.Add(t.Visual.btn); 
+                    }
+                    if (actief.XPNodig <= xp && t.Visual.btn.Enabled == false)
+                        t.Visual.btn.Enabled = true;
+                }
             }
             var techmessages = "";
-            foreach (var t in MijnGeloof.BeschikbareTechnologieen)
+            foreach (var t in MijnGeloof.AlleTechnologieen.Where(x=>x.Beschikbaar = true))
             {
                 var niveau = t.getActiefNiveau();
                 if (niveau != null)
@@ -121,6 +142,8 @@ namespace Diety
                             volgendniveau.Active = true;
                             t.Setbutton();
                             t.Visual.btn.BackColor = Color.LightGray;
+                            if (volgendniveau.XPNodig > xp)
+                                t.Visual.btn.Enabled = false;
                         }
                         else
                         {
@@ -137,9 +160,33 @@ namespace Diety
 
         void UpdateGeloofTick(object sender, EventArgs e)
         {
-            if(!Gewonnen)
-            UpdateGeloof();
+            if (Ticks % 10 != 0 && !Gewonnen)
+            {
+                UpdateImages();
+                Ticks += 1;
+            }
+            else
+            {
+                if (!Gewonnen)
+                {
+                    UpdateImages();
+                    UpdateGeloof();
+                    TijdVerstreken += 1;
+                    Ticks += 1;
+                }
+            }
         }
+
+        private void UpdateImages()
+        {
+            foreach (var volger in MijnGeloof.Volgers)
+            {
+               volger.NextImage(ImageTimer);
+            }
+            pnlView.Refresh();
+            ImageTimer = (ImageTimer + 1) % 4;
+        }
+
         private void UpdateLabels(Geloof mijnGeloof, bool vooruit)
         {
             AantalVolgers.Text = mijnGeloof.Volgers.Where(x=>x.Levend).ToList().Count.ToString();
@@ -149,14 +196,14 @@ namespace Diety
             VoedselMaximum.Text = "/ " + mijnGeloof.GetGrondstof(Enums.Grondstoffen.MaxVoedsel);
             if (vooruit)
             {
-                Tijd.Text = TijdVerstreken++ + "";
+                Tijd.Text = TijdVerstreken + "";
                 if (mijnGeloof.Volgers.Where(x => x.Levend).ToList().Count <= 0)
                 {
                     UpdateTimer.Stop();
                     tbxEvents.SelectionStart = tbxEvents.TextLength;
                     tbxEvents.SelectionLength = 0;
                     tbxEvents.SelectionColor = Color.Red;
-                    tbxEvents.AppendText( GeloofNaam.Text + " is uitgestorven na " + (TijdVerstreken - 1) + " Dagen"  + Resources.enter);
+                    tbxEvents.AppendText( GeloofNaam.Text + " is uitgestorven na " + (TijdVerstreken) + " Dagen"  + Resources.enter);
                     tbxEvents.SelectionColor = tbxEvents.ForeColor;
                     tbxEvents.ScrollToCaret();
                     Gewonnen = true;
@@ -213,7 +260,7 @@ namespace Diety
         {
             UpdateTimer = new Timer();
             TijdVerstreken = 0;
-            UpdateTimer.Interval = 2000;
+            UpdateTimer.Interval = 200;
             UpdateTimer.Enabled = true;
             UpdateTimer.Tick += UpdateGeloofTick;
             MijnGeloof = new Geloof();

@@ -22,7 +22,7 @@ namespace Diety.helpers
                 Text = volger.Naam + " Bidt tot jou.",
                 Profijt = new List<Cost>
                 {
-                    new Cost { OpbrengstType = Enums.Grondstoffen.Gebeden, CostObrengstWaarde = BepaalWaarde(1,2) },
+                    new Cost { OpbrengstType = Enums.Grondstoffen.Gebeden, CostObrengstWaarde = BepaalWaarde(1,1) },
                 },
                 Cost = new List<Cost>
                 {
@@ -33,8 +33,9 @@ namespace Diety.helpers
         }
         public static Actie VerzamelVoedsel(Volger volger)
         {
-            var opbrengstwaarde = BepaalWaarde(0, 2 + VoedselVerzamelBonus);
-            var costwaarde = BepaalWaarde(20,30);
+            var opbrengstwaarde = BepaalWaarde(0+VoedselVerzamelKans,100) >50 ? BepaalWaarde(0, 2 + VoedselVerzamelGrootte) : 0;
+            
+            var costwaarde = BepaalWaarde(10,30);
             var actie = new Actie
             {
 
@@ -67,7 +68,7 @@ namespace Diety.helpers
                 },
                 Cost = new List<Cost>
                 {
-                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = -1*BepaalWaarde(30,30) }
+                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = -1*BepaalWaarde(25,50) }
                 },
                 ActieUitvoerder = volger
             };
@@ -89,7 +90,21 @@ namespace Diety.helpers
             tech.Onderzoek(1);
             return actie;
         }
-
+        public static Actie BouwGebouw(Volger volger, Gebouw gebouw)
+        {
+            var actie = new Actie
+            {
+                Lengte = 1,
+                Naam = "Bouwen",
+                Text = volger.Naam + " doet onderzoek naar " + gebouw.Naam,
+                Cost = new List<Cost>
+                {
+                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = -1*BepaalWaarde(0,15) }
+                },
+                ActieUitvoerder = volger
+            };
+            return actie;
+        }
         #endregion
 
         #region GodActies

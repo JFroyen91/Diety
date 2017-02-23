@@ -24,13 +24,13 @@ namespace Diety.classes
             var honger = volger.GetStat(Enums.Stats.Honger);
             var voedsel = volger.Geloof.GetGrondstof(Enums.Grondstoffen.Voedsel);
             var maxvoedsel = volger.Geloof.GetGrondstof(Enums.Grondstoffen.MaxVoedsel);
-            var actieveonderzoeken = volger.Geloof.BeschikbareTechnologieen.Where(x => x.WordtOnderzocht).ToList();
+            var actieveonderzoeken = volger.Geloof.AlleTechnologieen.Where(x => x.WordtOnderzocht).ToList();
             var keuze = BepaalWaarde(0, 100);
 
 
             if (honger <= 30 && voedsel > 0)
                 return ActieLibrary.Eet(volger);
-            if (honger <= 70 && voedsel <= maxvoedsel - VoedselVerzamelBonus/2)
+            if (honger <= 70 && voedsel <= maxvoedsel - VoedselVerzamelGrootte/2)
             {
 
                 if (keuze > 90 && voedsel > 0)
@@ -47,8 +47,6 @@ namespace Diety.classes
             return ActieLibrary.Bid(volger);
         }
     }
-
-
     public class Cost
     {
         public Enums.Stats CostType { get; set; }

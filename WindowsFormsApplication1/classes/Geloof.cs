@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Diety.helpers;
+using Diety.helpers.Library;
 
 namespace Diety.classes
 {
@@ -11,12 +12,12 @@ namespace Diety.classes
         public string Naam { get; set; }
         public List<Volger> Volgers { get; set; }
         public List<Grondstof> Grondstoffen { get; set; }
-        public List<Technologie> BeschikbareTechnologieen { get; set; }
-
+        public List<Technologie> AlleTechnologieen { get; set; }
+        
         public Geloof()
         {
             Naam = "ik geloof in mijzelf";
-            BeschikbareTechnologieen = new List<Technologie>();
+            AlleTechnologieen = TechnologieLibrary.GetAllTechnologieen();
             Volgers = InitVolgers();
             InitGrondstoffen();
         }
@@ -51,6 +52,7 @@ namespace Diety.classes
                     Geslacht = g > 50 ?Enums.Geslacht.Man :Enums.Geslacht.Vrouw,
                     Geloof = this,
                     Levend = true,
+                    GeloofNiveau = Enums.GeloofNiveau.Gelovige
                 };
                 v.Naam = v.Geslacht == Enums.Geslacht.Man
                     ? ((Enums.VolgerMan)BepaalWaarde(0, 11)) + ""

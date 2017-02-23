@@ -17,6 +17,12 @@
             XP =5,
         }
 
+        public enum Bonussen
+        {
+            VoedselVerzamelGrootte = 1,
+            VoedselVerzamelKans = 2
+        }
+
         public enum Stats
         {
             Geen = 0,
@@ -53,6 +59,13 @@
             danny =9,
             frieda =10,
             freya =11
+        }
+
+        public enum GeloofNiveau
+        {
+            Ongelovige = 0,
+            Gelovige = 1,
+            Shamaan = 2
         }
     }
 }
