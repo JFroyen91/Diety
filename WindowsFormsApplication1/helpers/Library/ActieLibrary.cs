@@ -109,13 +109,17 @@ namespace Diety.helpers
 
         #region GodActies
 
-        public static void GeefVoedsel(Geloof mijnGeloof)
+        public static string GeefVoedsel(Geloof mijnGeloof)
         {
+            var returnstring = " je hebt niet genoeg kracht";
+            var waarde = BepaalWaarde(1, 3);
             if (mijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden) >= 3 && mijnGeloof.GetGrondstof(Enums.Grondstoffen.Voedsel) < mijnGeloof.GetGrondstof(Enums.Grondstoffen.MaxVoedsel))
             {
                 mijnGeloof.VerminderGrondstof(Enums.Grondstoffen.Gebeden, 3);
-                mijnGeloof.VermeerderGrondstof(Enums.Grondstoffen.Voedsel, 1);
+                mijnGeloof.VermeerderGrondstof(Enums.Grondstoffen.Voedsel, waarde);
+                returnstring = "Er is " + waarde + " Voedsel verschenen";
             }
+            return returnstring;
         }
 
         #endregion

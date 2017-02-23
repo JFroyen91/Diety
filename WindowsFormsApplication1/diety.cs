@@ -52,6 +52,7 @@ namespace Diety
                         e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Hp.Location, new Size(40, 10)));
                         e.Graphics.FillRectangle(new SolidBrush(Color.Green), v.Visual.Honger);
                         e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Honger.Location, new Size(40, 10)));
+                        e.Graphics.DrawImage(Resources.iconfood, new Point( v.Visual.Honger.Location.X -16 , v.Visual.Honger.Location.Y-2) );
                         e.Graphics.DrawString(v.Visual.NaamVisueel.Text, new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Black),
                             v.Visual.NaamVisueel.Location);
                     }
@@ -106,7 +107,7 @@ namespace Diety
 
         private void UpdateTech(int xp)
         {
-            if (xp >= 10 && !pnlTech.Visible)
+            if (xp >= 5 && !pnlTech.Visible)
             {
                 pnlTech.Show();
             }
@@ -118,9 +119,11 @@ namespace Diety
                     if (actief == null){continue;}
                     if (actief.XPNodig <= xp && !t.Visual.Toegevoegd)
                     {
+
                         t.Beschikbaar = true;
                         t.Visual.Toegevoegd = true;
-                        pnlTech.Controls.Add(t.Visual.btn); 
+                        pnlTech.Controls.Add(t.Visual.btn);
+                        UpdateEvents(new List<string>(), "Technologie beschikbaar : " + actief.Naam, Color.DarkGreen);
                     }
                     if (actief.XPNodig <= xp && t.Visual.btn.Enabled == false)
                         t.Visual.btn.Enabled = true;
@@ -238,16 +241,18 @@ namespace Diety
             return volgers;
         }
 
-        private void UpdateEvents(IEnumerable<string> messages , string Techmessage )
+        public void UpdateEvents(IEnumerable<string> messages , string Techmessage , Color color = default(Color))
         {
-            if (messages.Any())
+            if (color.Name == "0")
+                color =Color.Green;
+            if (messages != null && messages.Any() )
             {
                 tbxEvents.AppendText( string.Join(Environment.NewLine, messages) + Resources.enter);
             }
 
             tbxEvents.SelectionStart = tbxEvents.TextLength;
             tbxEvents.SelectionLength = 0;
-            tbxEvents.SelectionColor = Color.Green;
+            tbxEvents.SelectionColor = color;
             tbxEvents.AppendText(Techmessage + Resources.enter);
             tbxEvents.SelectionColor = tbxEvents.ForeColor;
             tbxEvents.AppendText(Resources.enter);
@@ -303,7 +308,7 @@ namespace Diety
 
         private void ActieGeefVoedsel_Click(object sender, EventArgs e)
         {
-            ActieLibrary.GeefVoedsel(MijnGeloof);
+            UpdateEvents(null , ActieLibrary.GeefVoedsel(MijnGeloof) , Color.Blue);
             
             UpdateLabels(MijnGeloof, false);
         }

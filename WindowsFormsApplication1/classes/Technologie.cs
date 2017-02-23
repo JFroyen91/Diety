@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Diety.helpers;
 using Diety.Properties;
 
+using cornerbtn = GaryPerkin.UserControls.Buttons.RoundButton;
+
 namespace Diety.classes
 {
    public  class Technologie
@@ -22,8 +24,8 @@ namespace Diety.classes
        internal void UpdateStatus(object sender, EventArgs e)
        {
            WordtOnderzocht = !WordtOnderzocht;
-           ((Button)sender).BackColor = WordtOnderzocht ? Color.Green : Color.Red;
-       }
+           ((cornerbtn)sender).BackColor = WordtOnderzocht ? Color.LawnGreen : Color.Red;
+         }
 
        public void Onderzoek(int modifier)
        {

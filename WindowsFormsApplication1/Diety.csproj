@@ -82,6 +82,9 @@
     <Compile Include="diety.Designer.cs">
       <DependentUpon>diety.cs</DependentUpon>
     </Compile>
+    <Compile Include="helpers\DoubleBufferPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="helpers\Library\ActieLibrary.cs" />
     <Compile Include="helpers\Enums.cs" />
     <Compile Include="classes\Geloof.cs" />
@@ -125,6 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\icons\iconclock.png" />
+    <Content Include="Resources\vrouw-blauw2.png" />
+    <Content Include="Resources\vrouw-blauw3.png" />
     <None Include="Resources\icons\iconfood.png" />
     <None Include="Resources\icons\iconprayer.png" />
     <Content Include="Resources\icons\iconvolger.png" />
@@ -151,6 +156,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RoundButton\RoundButton.csproj">
+      <Project>{7d09071c-e2ce-4289-b4bf-d3cdcf2b7ca7}</Project>
+      <Name>RoundButton</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

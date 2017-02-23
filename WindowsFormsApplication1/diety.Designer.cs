@@ -1,4 +1,8 @@
-﻿namespace Diety
+﻿using Diety.helpers;
+
+using cornerbtn = GaryPerkin.UserControls.Buttons.RoundButton;
+
+namespace Diety
 {
     partial class Game
     {
@@ -29,7 +33,7 @@
         private void InitializeComponent()
         {
             this.lblVolgers = new System.Windows.Forms.Label();
-            this.btnStart = new System.Windows.Forms.Button();
+            this.btnStart = new GaryPerkin.UserControls.Buttons.RoundButton();
             this.AantalVolgers = new System.Windows.Forms.Label();
             this.GeloofNaam = new System.Windows.Forms.Label();
             this.Tijd = new System.Windows.Forms.Label();
@@ -39,16 +43,15 @@
             this.Voedsel = new System.Windows.Forms.Label();
             this.lblVoedsel = new System.Windows.Forms.Label();
             this.pnlMenu = new System.Windows.Forms.Panel();
-            this.btnStop = new System.Windows.Forms.Button();
+            this.btnStop = new GaryPerkin.UserControls.Buttons.RoundButton();
             this.tbxGeloof = new System.Windows.Forms.TextBox();
-            this.pnlView = new System.Windows.Forms.Panel();
             this.pnlActies = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.ActieGeefVoedsel = new System.Windows.Forms.Button();
-            this.btnSneller = new System.Windows.Forms.Button();
-            this.btnTrager = new System.Windows.Forms.Button();
-            this.btnPlayPause = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
+            this.ActieGeefVoedsel = new GaryPerkin.UserControls.Buttons.RoundButton();
+            this.btnSneller = new GaryPerkin.UserControls.Buttons.RoundButton();
+            this.btnTrager = new GaryPerkin.UserControls.Buttons.RoundButton();
+            this.btnPlayPause = new GaryPerkin.UserControls.Buttons.RoundButton();
+            this.btnUpdate = new GaryPerkin.UserControls.Buttons.RoundButton();
             this.pnlEvents = new System.Windows.Forms.Panel();
             this.tbxEvents = new System.Windows.Forms.RichTextBox();
             this.lblEvents = new System.Windows.Forms.Label();
@@ -62,6 +65,8 @@
             this.pnlTijd = new System.Windows.Forms.Panel();
             this.pnlTech = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pnlView = new Diety.helpers.DoubleBufferPanel();
             this.pnlMenu.SuspendLayout();
             this.pnlActies.SuspendLayout();
             this.pnlEvents.SuspendLayout();
@@ -85,12 +90,15 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(3, 5);
+            this.btnStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnStart.Dome = true;
+            this.btnStart.Location = new System.Drawing.Point(12, 3);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(107, 22);
+            this.btnStart.RecessDepth = 0;
+            this.btnStart.Size = new System.Drawing.Size(49, 35);
             this.btnStart.TabIndex = 1;
             this.btnStart.Text = "Start geloof";
-            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.UseVisualStyleBackColor = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // AantalVolgers
@@ -169,22 +177,25 @@
             // pnlMenu
             // 
             this.pnlMenu.AutoSize = true;
-            this.pnlMenu.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlMenu.BackColor = System.Drawing.Color.Transparent;
             this.pnlMenu.Controls.Add(this.btnStop);
             this.pnlMenu.Controls.Add(this.btnStart);
             this.pnlMenu.Location = new System.Drawing.Point(692, 46);
             this.pnlMenu.Name = "pnlMenu";
-            this.pnlMenu.Size = new System.Drawing.Size(231, 39);
+            this.pnlMenu.Size = new System.Drawing.Size(124, 43);
             this.pnlMenu.TabIndex = 5;
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(116, 5);
+            this.btnStop.BackColor = System.Drawing.Color.Red;
+            this.btnStop.Dome = true;
+            this.btnStop.Location = new System.Drawing.Point(67, 3);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(107, 22);
+            this.btnStop.RecessDepth = 0;
+            this.btnStop.Size = new System.Drawing.Size(48, 37);
             this.btnStop.TabIndex = 3;
             this.btnStop.Text = "Exit";
-            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.UseVisualStyleBackColor = false;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // tbxGeloof
@@ -196,19 +207,10 @@
             this.tbxGeloof.TabIndex = 2;
             this.tbxGeloof.Click += new System.EventHandler(this.RemoveText);
             // 
-            // pnlView
-            // 
-            this.pnlView.AutoSize = true;
-            this.pnlView.BackColor = System.Drawing.Color.Transparent;
-            this.pnlView.Location = new System.Drawing.Point(167, 46);
-            this.pnlView.Name = "pnlView";
-            this.pnlView.Size = new System.Drawing.Size(519, 135);
-            this.pnlView.TabIndex = 6;
-            this.pnlView.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlViewPaint);
-            // 
             // pnlActies
             // 
             this.pnlActies.AutoSize = true;
+            this.pnlActies.BackColor = System.Drawing.Color.Transparent;
             this.pnlActies.Controls.Add(this.label1);
             this.pnlActies.Controls.Add(this.ActieGeefVoedsel);
             this.pnlActies.Location = new System.Drawing.Point(451, 313);
@@ -228,18 +230,22 @@
             // 
             // ActieGeefVoedsel
             // 
+            this.ActieGeefVoedsel.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.ActieGeefVoedsel.BevelDepth = 2;
             this.ActieGeefVoedsel.Location = new System.Drawing.Point(3, 22);
             this.ActieGeefVoedsel.Name = "ActieGeefVoedsel";
+            this.ActieGeefVoedsel.RecessDepth = 0;
             this.ActieGeefVoedsel.Size = new System.Drawing.Size(227, 23);
             this.ActieGeefVoedsel.TabIndex = 4;
-            this.ActieGeefVoedsel.Text = "Geef Voedsel  - Kost 3 opbrengst 1";
-            this.ActieGeefVoedsel.UseVisualStyleBackColor = true;
+            this.ActieGeefVoedsel.Text = "Tover voedsel";
+            this.ActieGeefVoedsel.UseVisualStyleBackColor = false;
             this.ActieGeefVoedsel.Click += new System.EventHandler(this.ActieGeefVoedsel_Click);
             // 
             // btnSneller
             // 
-            this.btnSneller.Location = new System.Drawing.Point(155, 32);
+            this.btnSneller.Location = new System.Drawing.Point(155, 46);
             this.btnSneller.Name = "btnSneller";
+            this.btnSneller.RecessDepth = 0;
             this.btnSneller.Size = new System.Drawing.Size(73, 23);
             this.btnSneller.TabIndex = 3;
             this.btnSneller.Text = "Sneller";
@@ -248,8 +254,9 @@
             // 
             // btnTrager
             // 
-            this.btnTrager.Location = new System.Drawing.Point(3, 32);
+            this.btnTrager.Location = new System.Drawing.Point(2, 46);
             this.btnTrager.Name = "btnTrager";
+            this.btnTrager.RecessDepth = 1;
             this.btnTrager.Size = new System.Drawing.Size(58, 23);
             this.btnTrager.TabIndex = 2;
             this.btnTrager.Text = "Trager";
@@ -258,8 +265,10 @@
             // 
             // btnPlayPause
             // 
-            this.btnPlayPause.Location = new System.Drawing.Point(3, 3);
+            this.btnPlayPause.BevelDepth = 2;
+            this.btnPlayPause.Location = new System.Drawing.Point(0, 17);
             this.btnPlayPause.Name = "btnPlayPause";
+            this.btnPlayPause.RecessDepth = 1;
             this.btnPlayPause.Size = new System.Drawing.Size(225, 23);
             this.btnPlayPause.TabIndex = 1;
             this.btnPlayPause.Text = "Pause";
@@ -268,8 +277,9 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(67, 32);
+            this.btnUpdate.Location = new System.Drawing.Point(67, 47);
             this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.RecessDepth = 1;
             this.btnUpdate.Size = new System.Drawing.Size(82, 22);
             this.btnUpdate.TabIndex = 0;
             this.btnUpdate.Text = "Vooruit";
@@ -386,18 +396,21 @@
             // 
             // pnlTijd
             // 
+            this.pnlTijd.BackColor = System.Drawing.Color.Transparent;
+            this.pnlTijd.Controls.Add(this.label3);
             this.pnlTijd.Controls.Add(this.btnPlayPause);
             this.pnlTijd.Controls.Add(this.btnUpdate);
             this.pnlTijd.Controls.Add(this.btnSneller);
             this.pnlTijd.Controls.Add(this.btnTrager);
-            this.pnlTijd.Location = new System.Drawing.Point(692, 91);
+            this.pnlTijd.Location = new System.Drawing.Point(692, 127);
             this.pnlTijd.Name = "pnlTijd";
-            this.pnlTijd.Size = new System.Drawing.Size(231, 63);
+            this.pnlTijd.Size = new System.Drawing.Size(231, 72);
             this.pnlTijd.TabIndex = 9;
             // 
             // pnlTech
             // 
             this.pnlTech.AutoSize = true;
+            this.pnlTech.BackColor = System.Drawing.Color.Transparent;
             this.pnlTech.Controls.Add(this.label2);
             this.pnlTech.Location = new System.Drawing.Point(694, 313);
             this.pnlTech.Name = "pnlTech";
@@ -413,6 +426,27 @@
             this.label2.Size = new System.Drawing.Size(47, 18);
             this.label2.TabIndex = 12;
             this.label2.Text = "Tech";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 10.75F);
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 18);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Tijd";
+            // 
+            // pnlView
+            // 
+            this.pnlView.AutoSize = true;
+            this.pnlView.BackColor = System.Drawing.Color.Transparent;
+            this.pnlView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnlView.Location = new System.Drawing.Point(167, 46);
+            this.pnlView.Name = "pnlView";
+            this.pnlView.Size = new System.Drawing.Size(502, 241);
+            this.pnlView.TabIndex = 6;
+            this.pnlView.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlViewPaint);
             // 
             // Game
             // 
@@ -430,6 +464,7 @@
             this.Controls.Add(this.pnlMenu);
             this.Controls.Add(this.pnlStats);
             this.Controls.Add(this.GeloofNaam);
+            this.DoubleBuffered = true;
             this.Name = "Game";
             this.Text = "Form1";
             this.pnlMenu.ResumeLayout(false);
@@ -444,6 +479,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlTijd.ResumeLayout(false);
+            this.pnlTijd.PerformLayout();
             this.pnlTech.ResumeLayout(false);
             this.pnlTech.PerformLayout();
             this.ResumeLayout(false);
@@ -454,11 +490,11 @@
         #endregion
 
         private System.Windows.Forms.Label lblVolgers;
-        private System.Windows.Forms.Button btnStart;
+        private cornerbtn btnStart;
         private System.Windows.Forms.Label AantalVolgers;
         private System.Windows.Forms.Label GeloofNaam;
         private System.Windows.Forms.Panel pnlMenu;
-        private System.Windows.Forms.Panel pnlView;
+        private DoubleBufferPanel pnlView;
         private System.Windows.Forms.Panel pnlActies;
         private System.Windows.Forms.Panel pnlEvents;
         private System.Windows.Forms.TextBox tbxGeloof;
@@ -467,19 +503,19 @@
         private System.Windows.Forms.Label Gebeden;
         private System.Windows.Forms.Label lblGebeden;
         private System.Windows.Forms.Label lblEvents;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnUpdate;
+        private cornerbtn btnStop;
+        private cornerbtn btnUpdate;
         private System.Windows.Forms.Label Tijd;
         private System.Windows.Forms.Label lblTijd;
-        private System.Windows.Forms.Button btnPlayPause;
-        private System.Windows.Forms.Button btnSneller;
-        private System.Windows.Forms.Button btnTrager;
+        private cornerbtn btnPlayPause;
+        private cornerbtn btnSneller;
+        private cornerbtn btnTrager;
         private System.Windows.Forms.Panel pnlStats;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button ActieGeefVoedsel;
+        private cornerbtn ActieGeefVoedsel;
         private System.Windows.Forms.Label VoedselMaximum;
         private System.Windows.Forms.Label populatielimiet;
         private System.Windows.Forms.Panel pnlTijd;
@@ -487,6 +523,7 @@
         private System.Windows.Forms.Panel pnlTech;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox tbxEvents;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -37,7 +37,7 @@ namespace Diety.classes
         public List<Volger> InitVolgers()
         {
             var volgers = new List<Volger>();
-            var x = 0;
+            var x = 16;
             Random r = new Random();
             for (var i = 0; i < 5; i++)
             {
@@ -59,7 +59,7 @@ namespace Diety.classes
                     : ((Enums.VolgerVrouw)BepaalWaarde(0, 11)) + "";
                 v.Visual = new Visual(x, 5 , v.GetStat(Enums.Stats.Leven) , v.Geslacht , v.Naam);
                 volgers.Add(v);
-                x += 60;
+                x += 80;
             }
             return volgers;
         }

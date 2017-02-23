@@ -128,9 +128,9 @@ namespace Diety.classes
                 Images = new Image[]
                 {
                     Resources.vrouw_blauw,
+                    Resources.vrouw_blauw2,
                     Resources.vrouw_blauw,
-                    Resources.vrouw_blauw,
-                    Resources.vrouw_blauw
+                    Resources.vrouw_blauw3
                 };
             }
             else
