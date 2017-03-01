@@ -73,8 +73,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="classes\Actie.cs" />
+    <Compile Include="classes\Actie.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="classes\Gebouw.cs" />
+    <Compile Include="classes\Niveau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="classes\Power.cs" />
     <Compile Include="classes\Technologie.cs" />
     <Compile Include="diety.cs">
       <SubType>Form</SubType>
@@ -85,17 +91,28 @@
     <Compile Include="helpers\DoubleBufferPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="helpers\Library\ActieLibrary.cs" />
+    <Compile Include="helpers\Library\ActieLibrary.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="helpers\Enums.cs" />
-    <Compile Include="classes\Geloof.cs" />
+    <Compile Include="classes\Geloof.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="classes\Grondstof.cs" />
-    <Compile Include="helpers\Helpers.cs" />
+    <Compile Include="helpers\Helpers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="helpers\Library\GebouwLibrary.cs" />
-    <Compile Include="helpers\Library\TechnologieLibrary.cs" />
+    <Compile Include="helpers\Library\TechnologieLibrary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="helpers\PowerTechVisual.cs" />
     <Compile Include="helpers\Updater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="classes\Volger.cs" />
+    <Compile Include="classes\Volger.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="diety.resx">
       <DependentUpon>diety.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,6 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\icons\iconclock.png" />
+    <Content Include="Resources\shamaan.png" />
+    <Content Include="Resources\shamaan1.png" />
+    <Content Include="Resources\shamaan2.png" />
+    <Content Include="Resources\shamaan3.png" />
     <Content Include="Resources\vrouw-blauw2.png" />
     <Content Include="Resources\vrouw-blauw3.png" />
     <None Include="Resources\icons\iconfood.png" />

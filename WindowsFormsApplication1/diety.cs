@@ -15,17 +15,12 @@ using Diety.Properties;
 
 namespace Diety
 {
-    public partial class Game : Form
+    public partial class Game : Helpers
     {
-        public Geloof MijnGeloof { get; set; }
-        public Timer UpdateTimer { get; set; }
-        public int Ticks { get; set; }
-        public int TijdVerstreken { get; set; }
-        public bool Gewonnen { get; set; }
-        public int ImageTimer = 1;
         
         public Game()
         {
+            spel = this;
             Ticks = 0;
             InitializeComponent();
             pnlActies.Hide();
@@ -52,7 +47,10 @@ namespace Diety
                         e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Hp.Location, new Size(40, 10)));
                         e.Graphics.FillRectangle(new SolidBrush(Color.Green), v.Visual.Honger);
                         e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Honger.Location, new Size(40, 10)));
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Blue), v.Visual.Gelovigheid);
+                        e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Gelovigheid.Location, new Size(40, 10)));
                         e.Graphics.DrawImage(Resources.iconfood, new Point( v.Visual.Honger.Location.X -16 , v.Visual.Honger.Location.Y-2) );
+                        e.Graphics.DrawImage(Resources.iconprayer, new Point(v.Visual.Gelovigheid.Location.X - 16, v.Visual.Gelovigheid.Location.Y - 2));
                         e.Graphics.DrawString(v.Visual.NaamVisueel.Text, new Font(FontFamily.GenericMonospace, 10), new SolidBrush(Color.Black),
                             v.Visual.NaamVisueel.Location);
                     }
@@ -87,7 +85,7 @@ namespace Diety
 
         void UpdateGeloof()
         {
-            if (TijdVerstreken >= 100)
+            if (MijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden) >= 100)
             {
                 tbxEvents.SelectionStart = tbxEvents.TextLength;
                 tbxEvents.SelectionLength = 0;
@@ -102,6 +100,7 @@ namespace Diety
             MijnGeloof.Volgers = UpdateVolgers(MijnGeloof.Volgers);
             UpdateLabels(MijnGeloof, true);
             UpdateTech(MijnGeloof.GetGrondstof(Enums.Grondstoffen.XP));
+            UpdatePowers();
             pnlView.Refresh();
         }
 
@@ -113,7 +112,7 @@ namespace Diety
             }
             if (xp >= 10)
             {
-                foreach (var t in MijnGeloof.AlleTechnologieen)
+                foreach (var t in MijnGeloof.Technologieen)
                 {
                     var actief = t.getActiefNiveau();
                     if (actief == null){continue;}
@@ -130,7 +129,7 @@ namespace Diety
                 }
             }
             var techmessages = "";
-            foreach (var t in MijnGeloof.AlleTechnologieen.Where(x=>x.Beschikbaar = true))
+            foreach (var t in MijnGeloof.Technologieen.Where(x=>x.Beschikbaar = true))
             {
                 var niveau = t.getActiefNiveau();
                 if (niveau != null)
@@ -190,7 +189,7 @@ namespace Diety
             ImageTimer = (ImageTimer + 1) % 4;
         }
 
-        private void UpdateLabels(Geloof mijnGeloof, bool vooruit)
+        public void UpdateLabels(Geloof mijnGeloof, bool vooruit)
         {
             AantalVolgers.Text = mijnGeloof.Volgers.Where(x=>x.Levend).ToList().Count.ToString();
             GeloofNaam.Text = string.IsNullOrWhiteSpace(tbxGeloof.Text) ? mijnGeloof.Naam : tbxGeloof.Text;
@@ -216,10 +215,19 @@ namespace Diety
             }
         }
 
+        private void UpdatePowers()
+        {
+            foreach (var p in MijnGeloof.Powers.Where(x => (x.Beschikbaar || x.UnlockWaarde< MijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden)) && !x.Visual.Toegevoegd))
+            {
+                p.Visual.Toegevoegd = true;
+                pnlActies.Controls.Add(p.Visual.btn);
+            }
+
+        }
+
         private List<Volger> UpdateVolgers(List<Volger> volgers)
         {
-            var messages = new ConcurrentBag<string>();
-            messages.Add("-------DAG " + TijdVerstreken + " ---------" + Resources.enter);
+            var messages = new ConcurrentBag<string> { "-------DAG " + TijdVerstreken + " ---------" + Resources.enter };
             foreach (var message in volgers.Where(x => x.Levend).Select(volger => volger.VoerActieUit()).Where(message => message != ""))
             {
                 messages.Add(message);
@@ -276,7 +284,11 @@ namespace Diety
             tbxGeloof.Hide();
             UpdateTimer.Start();
             pnlView.Refresh();
+            UpdatePowers();
         }
+
+      
+
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
             if (UpdateTimer != null)
@@ -306,11 +318,6 @@ namespace Diety
             UpdateTimer.Interval += 500;
         }
 
-        private void ActieGeefVoedsel_Click(object sender, EventArgs e)
-        {
-            UpdateEvents(null , ActieLibrary.GeefVoedsel(MijnGeloof) , Color.Blue);
-            
-            UpdateLabels(MijnGeloof, false);
-        }
+        
     }
 }

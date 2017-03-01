@@ -27,7 +27,8 @@
         {
             Geen = 0,
             Leven = 1,
-            Honger = 2
+            Honger = 2,
+            Gelovigheid = 3
         }
 
         public enum VolgerMan
@@ -43,7 +44,23 @@
             gert =8,
             harry =9,
             karel = 10,
-            luc =11
+            luc =11,
+            maxim = 12,
+            olaf =13,
+            patrick = 14,
+            quinten = 15,
+            rusty = 16,
+            sven = 17 ,
+            tobi = 18,
+            ulrich = 19,
+            vince = 20,
+            wally = 21,
+            xeno =22,
+            yasuo = 23,
+            zoltar = 24,
+            indriss=25,
+            joris = 26
+
         }
         public enum VolgerVrouw
         {
@@ -61,11 +78,10 @@
             freya =11
         }
 
-        public enum GeloofNiveau
+        public enum Job
         {
-            Ongelovige = 0,
-            Gelovige = 1,
-            Shamaan = 2
+            Geen = 0,
+            Shamaan = 1
         }
     }
 }

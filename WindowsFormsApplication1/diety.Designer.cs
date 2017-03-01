@@ -47,7 +47,6 @@ namespace Diety
             this.tbxGeloof = new System.Windows.Forms.TextBox();
             this.pnlActies = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.ActieGeefVoedsel = new GaryPerkin.UserControls.Buttons.RoundButton();
             this.btnSneller = new GaryPerkin.UserControls.Buttons.RoundButton();
             this.btnTrager = new GaryPerkin.UserControls.Buttons.RoundButton();
             this.btnPlayPause = new GaryPerkin.UserControls.Buttons.RoundButton();
@@ -63,9 +62,9 @@ namespace Diety
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlTijd = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.pnlTech = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.pnlView = new Diety.helpers.DoubleBufferPanel();
             this.pnlMenu.SuspendLayout();
             this.pnlActies.SuspendLayout();
@@ -97,7 +96,7 @@ namespace Diety
             this.btnStart.RecessDepth = 0;
             this.btnStart.Size = new System.Drawing.Size(49, 35);
             this.btnStart.TabIndex = 1;
-            this.btnStart.Text = "Start geloof";
+            this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = false;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
@@ -212,7 +211,6 @@ namespace Diety
             this.pnlActies.AutoSize = true;
             this.pnlActies.BackColor = System.Drawing.Color.Transparent;
             this.pnlActies.Controls.Add(this.label1);
-            this.pnlActies.Controls.Add(this.ActieGeefVoedsel);
             this.pnlActies.Location = new System.Drawing.Point(451, 313);
             this.pnlActies.Name = "pnlActies";
             this.pnlActies.Size = new System.Drawing.Size(235, 324);
@@ -227,19 +225,6 @@ namespace Diety
             this.label1.Size = new System.Drawing.Size(72, 18);
             this.label1.TabIndex = 11;
             this.label1.Text = "Powers";
-            // 
-            // ActieGeefVoedsel
-            // 
-            this.ActieGeefVoedsel.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.ActieGeefVoedsel.BevelDepth = 2;
-            this.ActieGeefVoedsel.Location = new System.Drawing.Point(3, 22);
-            this.ActieGeefVoedsel.Name = "ActieGeefVoedsel";
-            this.ActieGeefVoedsel.RecessDepth = 0;
-            this.ActieGeefVoedsel.Size = new System.Drawing.Size(227, 23);
-            this.ActieGeefVoedsel.TabIndex = 4;
-            this.ActieGeefVoedsel.Text = "Tover voedsel";
-            this.ActieGeefVoedsel.UseVisualStyleBackColor = false;
-            this.ActieGeefVoedsel.Click += new System.EventHandler(this.ActieGeefVoedsel_Click);
             // 
             // btnSneller
             // 
@@ -407,6 +392,16 @@ namespace Diety
             this.pnlTijd.Size = new System.Drawing.Size(231, 72);
             this.pnlTijd.TabIndex = 9;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 10.75F);
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 18);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Tijd";
+            // 
             // pnlTech
             // 
             this.pnlTech.AutoSize = true;
@@ -426,16 +421,6 @@ namespace Diety
             this.label2.Size = new System.Drawing.Size(47, 18);
             this.label2.TabIndex = 12;
             this.label2.Text = "Tech";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Showcard Gothic", 10.75F);
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 18);
-            this.label3.TabIndex = 13;
-            this.label3.Text = "Tijd";
             // 
             // pnlView
             // 
@@ -515,7 +500,6 @@ namespace Diety
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private cornerbtn ActieGeefVoedsel;
         private System.Windows.Forms.Label VoedselMaximum;
         private System.Windows.Forms.Label populatielimiet;
         private System.Windows.Forms.Panel pnlTijd;

@@ -9,19 +9,35 @@ using Diety.Properties;
 
 namespace Diety.classes
 {
-    public class Volger :Helpers
+    public class Volger : Helpers
     {
         public bool Levend { get; set; }
         public List<Stat> Stats { get; set; }
         public string Naam { get; set; }
         public Enums.Geslacht Geslacht { get; set; }
-        public Enums.GeloofNiveau GeloofNiveau{get;set;}
-
+        public Enums.Job Job { get; set; }
         public Actie Actie { get; set; }
         public Geloof Geloof { get; set; }
         public Random Randomgen { get; set; }
         public Visual Visual { get; set; }
-        
+
+        public Volger(int geslacht , Geloof geloof , int VisualX)
+        {
+            Stats = new List<Stat>
+            {
+                new Stat(Enums.Stats.Leven, 100),
+                new Stat(Enums.Stats.Honger, 100),
+                new Stat(Enums.Stats.Gelovigheid , 50)
+            };
+            Geslacht = geslacht > 50 ? Enums.Geslacht.Man : Enums.Geslacht.Vrouw;
+            Geloof = geloof;
+            Levend = true;
+            Job = Enums.Job.Geen;
+            Naam = Geslacht == Enums.Geslacht.Man
+                    ? (Enums.VolgerMan)BepaalWaarde(0, 11) + ""
+                    : (Enums.VolgerVrouw)BepaalWaarde(0, 11) + "";
+            Visual = new Visual(VisualX, 5, GetStat(Enums.Stats.Leven), Geslacht, Naam);
+        }
 
         public string Update()
         {
@@ -54,9 +70,18 @@ namespace Diety.classes
                 {
                     SetStat(Enums.Stats.Honger, 100);
                 }
+                if (GetStat(Enums.Stats.Gelovigheid) >= 100)
+                {
+                    SetStat(Enums.Stats.Gelovigheid, 100);
+                }
+                if (GetStat(Enums.Stats.Leven) >= 100)
+                {
+                    SetStat(Enums.Stats.Leven, 100);
+                }
             }
             Visual.Hp = new Rectangle(Visual.Hp.Location, new Size(40 * GetStat(Enums.Stats.Leven) / 100, 10));
             Visual.Honger = new Rectangle(Visual.Honger.Location, new Size(40 * GetStat(Enums.Stats.Honger) / 100, 10));
+            Visual.Gelovigheid = new Rectangle(Visual.Gelovigheid.Location, new Size(40 * GetStat(Enums.Stats.Gelovigheid) / 100, 10));
             Visual.NaamVisueel = new Label{ Location = Visual.NaamVisueel.Location , Text = Naam , Size = Visual.NaamVisueel.Size};
             return tekst;
         }
@@ -74,6 +99,7 @@ namespace Diety.classes
             Geloof.Update(Actie.Profijt);
             return Actie.Text;
         }
+        #region stats
         internal void UpdateStats(List<Cost> Costs)
         {
             if (Costs == null)
@@ -101,6 +127,7 @@ namespace Diety.classes
         {
             return Stats.FirstOrDefault(x => x.StatType == stat).Waarde -= waarde;
         }
+#endregion
     }
 
     public class Visual
@@ -108,9 +135,9 @@ namespace Diety.classes
         public PictureBox Picture { get; set; }
         public Rectangle Hp { get; set; }
         public Rectangle Honger { get; set; }
+        public Rectangle Gelovigheid { get; set; }
         public Label NaamVisueel { get; set; }
         public Image[] Images { get; set; }
-
         public int PictureCounter = 0;
 
         public Visual(int x, int y, int lengtehp, Enums.Geslacht geslacht, string naam)
@@ -148,6 +175,7 @@ namespace Diety.classes
         NaamVisueel = new Label{ Location =  new Point(x + 5, y + 50) ,Size = new Size(50 , 15) , Text = naam };
             Hp = new Rectangle { Location = new Point(x + 5, y + 75), Size = new Size(40 * lengtehp / 100, 10) };
             Honger = new Rectangle { Location = new Point(x+5, y + 90), Size = new Size(40, 10) };
+            Gelovigheid = new Rectangle { Location = new Point(x + 5, y + 105), Size = new Size(40, 10) };
         }
     }
 

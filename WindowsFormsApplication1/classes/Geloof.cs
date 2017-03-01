@@ -1,25 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 using Diety.helpers;
 using Diety.helpers.Library;
 
+using CornerBtn = GaryPerkin.UserControls.Buttons.RoundButton;
+
 namespace Diety.classes
 {
     public class Geloof : Helpers
     {
+        private object Gebruikpower;
         public string Naam { get; set; }
         public List<Volger> Volgers { get; set; }
         public List<Grondstof> Grondstoffen { get; set; }
-        public List<Technologie> AlleTechnologieen { get; set; }
-        
+        public List<Technologie> Technologieen { get; set; }
+        public List<Power> Powers { get; set; }
+
         public Geloof()
         {
             Naam = "ik geloof in mijzelf";
-            AlleTechnologieen = TechnologieLibrary.GetAllTechnologieen();
+            Technologieen = TechnologieLibrary.GetAllTechnologieen();
             Volgers = InitVolgers();
             InitGrondstoffen();
+            InitPowers();
+        }
+
+        private void InitPowers()
+        {
+            Powers = new List<Power>
+            {
+                new Power
+                {
+                    Beschikbaar = true,
+                    UnlockWaarde = 3,
+                    Visual =new PowerTechVisual {
+                    Toegevoegd = false,
+                    btn = new CornerBtn { Text = "Tover Voedsel(3)", Size = new Size(55,55)   },
+                    
+                    },
+                    Gebruikpower  = ActieLibrary.GeefVoedsel
+                   },
+               new Power
+                {
+                    UnlockWaarde = 50,
+                    Beschikbaar = false,
+                    Visual =new PowerTechVisual {
+                    Toegevoegd = false,
+                    btn = new CornerBtn { Text = "Spreek tot volger(50)", Size = new Size(55,55)   },
+                    },
+                    Gebruikpower = ActieLibrary.MaakShamaan
+                   }
+            };
+
+
+            var y = 15;
+            var x = 15;
+            foreach (var p in Powers)
+            {
+                p.Visual.btn.Click += p.Gebruikpower;
+                p.Visual.btn.Location = new Point(x, y);
+                x += 55;
+                if (x >= 200)
+                {
+                    x = 15;
+                    y += 55;
+                }
+            }
         }
 
         private void InitGrondstoffen()
@@ -41,23 +90,7 @@ namespace Diety.classes
             Random r = new Random();
             for (var i = 0; i < 5; i++)
             {
-                var g = r.Next(0, 100);
-                Volger v = new Volger
-                {
-                    Stats = new List<Stat>
-                    {
-                        new Stat(Enums.Stats.Leven, 100),
-                        new Stat(Enums.Stats.Honger, 100)
-                    },
-                    Geslacht = g > 50 ?Enums.Geslacht.Man :Enums.Geslacht.Vrouw,
-                    Geloof = this,
-                    Levend = true,
-                    GeloofNiveau = Enums.GeloofNiveau.Gelovige
-                };
-                v.Naam = v.Geslacht == Enums.Geslacht.Man
-                    ? ((Enums.VolgerMan)BepaalWaarde(0, 11)) + ""
-                    : ((Enums.VolgerVrouw)BepaalWaarde(0, 11)) + "";
-                v.Visual = new Visual(x, 5 , v.GetStat(Enums.Stats.Leven) , v.Geslacht , v.Naam);
+                Volger v = new Volger(r.Next(0, 100), this, x);
                 volgers.Add(v);
                 x += 80;
             }
@@ -66,7 +99,7 @@ namespace Diety.classes
 
         public void Update(List<Cost> profijt)
         {
-            if (profijt == null )
+            if (profijt == null)
                 return;
             foreach (var obrengst in profijt)
             {
@@ -75,26 +108,28 @@ namespace Diety.classes
             CheckMaximums();
         }
 
+        #region grondstoffen
         private void CheckMaximums()
         {
-            if(GetGrondstof(Enums.Grondstoffen.Voedsel) > GetGrondstof(Enums.Grondstoffen.MaxVoedsel) )
+            if (GetGrondstof(Enums.Grondstoffen.Voedsel) > GetGrondstof(Enums.Grondstoffen.MaxVoedsel))
                 SetGrondstof(Enums.Grondstoffen.Voedsel, GetGrondstof(Enums.Grondstoffen.MaxVoedsel));
         }
-        public void SetGrondstof(Enums.Grondstoffen grondstof , int waarde)
+        public void SetGrondstof(Enums.Grondstoffen grondstof, int waarde)
         {
             Grondstoffen.FirstOrDefault(x => x.GrondstofType == grondstof).Waarde = waarde;
         }
-        public int GetGrondstof( Enums.Grondstoffen grondstof )
+        public int GetGrondstof(Enums.Grondstoffen grondstof)
         {
             return Grondstoffen.FirstOrDefault(x => x.GrondstofType == grondstof).Waarde;
         }
-        public int VermeerderGrondstof(Enums.Grondstoffen grondstof ,int waarde)
+        public int VermeerderGrondstof(Enums.Grondstoffen grondstof, int waarde)
         {
-            return Grondstoffen.FirstOrDefault(x => x.GrondstofType == grondstof).Waarde+= waarde;
+            return Grondstoffen.FirstOrDefault(x => x.GrondstofType == grondstof).Waarde += waarde;
         }
-        public int VerminderGrondstof(Enums.Grondstoffen grondstof , int waarde)
+        public int VerminderGrondstof(Enums.Grondstoffen grondstof, int waarde)
         {
             return Grondstoffen.FirstOrDefault(x => x.GrondstofType == grondstof).Waarde -= waarde;
         }
+        #endregion
     }
 }
