@@ -30,6 +30,10 @@ namespace Diety.classes
             {
                 VoedselVerzamelKans += Niveaubonus;
             }
+            if (Niveaubonustype == Enums.Bonussen.VoedselOpslagGrootte)
+            {
+                VoedselOpslagGrootte += Niveaubonus;
+            }
             return Niveaucompletetext;
         }
     }

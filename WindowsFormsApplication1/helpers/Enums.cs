@@ -20,7 +20,8 @@
         public enum Bonussen
         {
             VoedselVerzamelGrootte = 1,
-            VoedselVerzamelKans = 2
+            VoedselVerzamelKans = 2,
+            VoedselOpslagGrootte = 3
         }
 
         public enum Stats

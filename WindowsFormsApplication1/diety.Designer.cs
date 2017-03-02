@@ -211,7 +211,7 @@ namespace Diety
             this.pnlActies.AutoSize = true;
             this.pnlActies.BackColor = System.Drawing.Color.Transparent;
             this.pnlActies.Controls.Add(this.label1);
-            this.pnlActies.Location = new System.Drawing.Point(451, 313);
+            this.pnlActies.Location = new System.Drawing.Point(12, 306);
             this.pnlActies.Name = "pnlActies";
             this.pnlActies.Size = new System.Drawing.Size(235, 324);
             this.pnlActies.TabIndex = 7;
@@ -276,16 +276,16 @@ namespace Diety
             this.pnlEvents.AutoSize = true;
             this.pnlEvents.Controls.Add(this.tbxEvents);
             this.pnlEvents.Controls.Add(this.lblEvents);
-            this.pnlEvents.Location = new System.Drawing.Point(2, 313);
+            this.pnlEvents.Location = new System.Drawing.Point(929, 46);
             this.pnlEvents.Name = "pnlEvents";
-            this.pnlEvents.Size = new System.Drawing.Size(443, 327);
+            this.pnlEvents.Size = new System.Drawing.Size(313, 587);
             this.pnlEvents.TabIndex = 8;
             // 
             // tbxEvents
             // 
-            this.tbxEvents.Location = new System.Drawing.Point(6, 24);
+            this.tbxEvents.Location = new System.Drawing.Point(6, 23);
             this.tbxEvents.Name = "tbxEvents";
-            this.tbxEvents.Size = new System.Drawing.Size(434, 300);
+            this.tbxEvents.Size = new System.Drawing.Size(304, 561);
             this.tbxEvents.TabIndex = 11;
             this.tbxEvents.Text = "";
             // 
@@ -407,7 +407,7 @@ namespace Diety
             this.pnlTech.AutoSize = true;
             this.pnlTech.BackColor = System.Drawing.Color.Transparent;
             this.pnlTech.Controls.Add(this.label2);
-            this.pnlTech.Location = new System.Drawing.Point(694, 313);
+            this.pnlTech.Location = new System.Drawing.Point(360, 306);
             this.pnlTech.Name = "pnlTech";
             this.pnlTech.Size = new System.Drawing.Size(233, 324);
             this.pnlTech.TabIndex = 8;
@@ -439,7 +439,7 @@ namespace Diety
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Diety.Properties.Resources.background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1229, 656);
+            this.ClientSize = new System.Drawing.Size(1353, 656);
             this.Controls.Add(this.pnlTech);
             this.Controls.Add(this.pnlTijd);
             this.Controls.Add(this.pnlEvents);

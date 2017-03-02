@@ -111,8 +111,10 @@ namespace Diety.classes
         #region grondstoffen
         private void CheckMaximums()
         {
+            SetGrondstof(Enums.Grondstoffen.MaxVoedsel, 10 + VoedselOpslagGrootte);
             if (GetGrondstof(Enums.Grondstoffen.Voedsel) > GetGrondstof(Enums.Grondstoffen.MaxVoedsel))
                 SetGrondstof(Enums.Grondstoffen.Voedsel, GetGrondstof(Enums.Grondstoffen.MaxVoedsel));
+           
         }
         public void SetGrondstof(Enums.Grondstoffen grondstof, int waarde)
         {

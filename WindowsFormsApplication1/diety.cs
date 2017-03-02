@@ -85,7 +85,7 @@ namespace Diety
 
         void UpdateGeloof()
         {
-            if (MijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden) >= 100)
+            if (MijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden) >= 500)
             {
                 tbxEvents.SelectionStart = tbxEvents.TextLength;
                 tbxEvents.SelectionLength = 0;
