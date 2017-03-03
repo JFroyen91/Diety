@@ -9,5 +9,6 @@ namespace Diety.classes
    public class Gebouw
     {
        public string Naam { get; set; }
+       public List<Niveau> Gebouwlevel { get; set; }
     }
 }

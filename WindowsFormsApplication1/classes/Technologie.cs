@@ -9,7 +9,7 @@ using cornerbtn = GaryPerkin.UserControls.Buttons.RoundButton;
 
 namespace Diety.classes
 {
-   public  class Technologie
+   public  class Technologie : Helpers
     {
        public string Naam { get; set; }
        public List<Niveau> Niveaus { get; set; }
@@ -21,7 +21,19 @@ namespace Diety.classes
        {
            WordtOnderzocht = !WordtOnderzocht;
            ((cornerbtn)sender).BackColor = WordtOnderzocht ? Color.LawnGreen : Color.Red;
-         }
+           var actiefniveau = getActiefNiveau();
+           if (actiefniveau.Progress == 0)
+           {
+               foreach (var benodigdheid in actiefniveau.grondstoffenNodig)
+               {
+                   MijnGeloof.Grondstoffen.FirstOrDefault(x=>x.GrondstofType == benodigdheid.GrondstofType).Waarde-= benodigdheid.Waarde;
+               }
+               actiefniveau.Progress += 1;
+           }
+           spel.UpdateLabels(MijnGeloof, false);
+           Visual.btn.Text = actiefniveau.Naam + " (" + actiefniveau.Progress + "/" + actiefniveau.TijdNodig + ") ";
+           spel.CheckTechs();
+       }
 
        public void Onderzoek(int modifier)
        {
@@ -30,15 +42,25 @@ namespace Diety.classes
            if (actiefniveau != null)
            {
                actiefniveau.Progress += modifier;
-               if (actiefniveau.Progress >= actiefniveau.Onderzoekslengte)
+               if (actiefniveau.Progress >= actiefniveau.TijdNodig)
                {
-                   actiefniveau.Progress = actiefniveau.Onderzoekslengte;
+                   actiefniveau.Progress = actiefniveau.TijdNodig;
                    WordtOnderzocht = false;
                   
                }
            }
-           Visual.btn.Text = actiefniveau.Naam + " (" + actiefniveau.Progress + "/" + actiefniveau.Onderzoekslengte + ")";
+           Visual.btn.Text = actiefniveau.Naam + " (" + actiefniveau.Progress + "/" + actiefniveau.TijdNodig + ") " ;
            
+       }
+
+       private string DisplayString(List<Grondstof> grondstoffenNodig)
+       {
+           var returnstring = "";
+           foreach (var grondstof in grondstoffenNodig)
+           {
+               returnstring += grondstof.GrondstofType + " : " + grondstof.Waarde + " ";
+           }
+           return returnstring;
        }
 
        public Niveau getActiefNiveau()
@@ -61,7 +83,7 @@ namespace Diety.classes
            }
            if(init) 
            Visual.btn.Click += UpdateStatus;
-           Visual.btn.Text = actiefNiveau.Naam + " (" + actiefNiveau.Progress + "/" + actiefNiveau.Onderzoekslengte + ")";
+           Visual.btn.Text = actiefNiveau.Naam + " (" + actiefNiveau.Progress + "/" + actiefNiveau.TijdNodig + ") " + DisplayString(actiefNiveau.grondstoffenNodig);
        }
     }
 }

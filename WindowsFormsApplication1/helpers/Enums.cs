@@ -15,6 +15,8 @@
             MaxVoedsel =3,
             PopulatieLimiet = 4,
             XP =5,
+            Hout = 6,
+            Steen = 7
         }
 
         public enum Bonussen

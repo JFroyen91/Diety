@@ -85,7 +85,7 @@ namespace Diety
 
         void UpdateGeloof()
         {
-            if (MijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden) >= 500)
+            if (Winconditie())
             {
                 tbxEvents.SelectionStart = tbxEvents.TextLength;
                 tbxEvents.SelectionLength = 0;
@@ -104,19 +104,39 @@ namespace Diety
             pnlView.Refresh();
         }
 
-        private void UpdateTech(int xp)
+        private bool Winconditie()
         {
-            if (xp >= 5 && !pnlTech.Visible)
+            if (MijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden) >= 1000)
+                return true;
+            return false;
+        }
+
+        public void CheckTechs()
+        {
+            foreach (var tech in MijnGeloof.Technologieen.Where(x => x.Beschikbaar))
+            {
+                if (tech.getActiefNiveau().Checkvoorwaarden())
+                {
+                    tech.Visual.btn.Enabled = true;
+                }
+                else
+                    tech.Visual.btn.Enabled = false;
+            }
+        }
+
+        private void UpdateTech(int MijnXp)
+        {
+            if (MijnXp >= 3 && !pnlTech.Visible)
             {
                 pnlTech.Show();
             }
-            if (xp >= 10)
+            if (MijnXp >= 3)
             {
                 foreach (var t in MijnGeloof.Technologieen)
                 {
                     var actief = t.getActiefNiveau();
                     if (actief == null){continue;}
-                    if (actief.XPNodig <= xp && !t.Visual.Toegevoegd)
+                    if (actief.Checkvoorwaarden() && !t.Visual.Toegevoegd)
                     {
 
                         t.Beschikbaar = true;
@@ -124,32 +144,33 @@ namespace Diety
                         pnlTech.Controls.Add(t.Visual.btn);
                         UpdateEvents(new List<string>(), "Technologie beschikbaar : " + actief.Naam, Color.DarkGreen);
                     }
-                    if (actief.XPNodig <= xp && t.Visual.btn.Enabled == false)
+                    if (actief.Checkvoorwaarden() && t.Visual.btn.Enabled == false)
                         t.Visual.btn.Enabled = true;
                 }
             }
             var techmessages = "";
-            foreach (var t in MijnGeloof.Technologieen.Where(x=>x.Beschikbaar = true))
+            foreach (var tech in MijnGeloof.Technologieen.Where(x=>x.Beschikbaar))
             {
-                var niveau = t.getActiefNiveau();
+                var niveau = tech.getActiefNiveau();
                 if (niveau != null)
                 {
-                    if (niveau.Progress == niveau.Onderzoekslengte)
+                    if (niveau.Progress == niveau.TijdNodig)
                     {
                         techmessages += niveau.Complete();
-                        var volgendniveau = t.GetVolgendNiveau();
+                        var volgendniveau = tech.GetVolgendNiveau();
                         niveau.Active = false;
                         if (volgendniveau != null)
                         {
                             volgendniveau.Active = true;
-                            t.Setbutton();
-                            t.Visual.btn.BackColor = Color.LightGray;
-                            if (volgendniveau.XPNodig > xp)
-                                t.Visual.btn.Enabled = false;
+                            tech.Setbutton();
+                            tech.Visual.btn.BackColor = Color.LightGray;
+                            if (!volgendniveau.Checkvoorwaarden())
+                                tech.Visual.btn.Enabled = false;
                         }
                         else
                         {
-                            pnlTech.Controls.Remove(t.Visual.btn);
+                            tech.Beschikbaar = false;
+                            pnlTech.Controls.Remove(tech.Visual.btn);
                         }
                     }
                 }
@@ -195,6 +216,7 @@ namespace Diety
             GeloofNaam.Text = string.IsNullOrWhiteSpace(tbxGeloof.Text) ? mijnGeloof.Naam : tbxGeloof.Text;
             Voedsel.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.Voedsel).ToString();
             Gebeden.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden).ToString();
+            Ervaring.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.XP).ToString();
             VoedselMaximum.Text = "/ " + mijnGeloof.GetGrondstof(Enums.Grondstoffen.MaxVoedsel);
             if (vooruit)
             {
@@ -287,8 +309,6 @@ namespace Diety
             UpdatePowers();
         }
 
-      
-
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
             if (UpdateTimer != null)
@@ -311,11 +331,11 @@ namespace Diety
         }
         private void btnSneller_Click(object sender, EventArgs e)
         {
-           UpdateTimer.Interval = UpdateTimer.Interval > 500 ? UpdateTimer.Interval - 500 : 100;
+           UpdateTimer.Interval = UpdateTimer.Interval > 100 ? UpdateTimer.Interval - 100 : 50;
         }
         private void btnTrager_Click(object sender, EventArgs e)
         {
-            UpdateTimer.Interval += 500;
+            UpdateTimer.Interval += 100;
         }
 
         

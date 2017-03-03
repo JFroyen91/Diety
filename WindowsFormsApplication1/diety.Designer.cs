@@ -66,6 +66,8 @@ namespace Diety
             this.pnlTech = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.pnlView = new Diety.helpers.DoubleBufferPanel();
+            this.lblErvaring = new System.Windows.Forms.Label();
+            this.Ervaring = new System.Windows.Forms.Label();
             this.pnlMenu.SuspendLayout();
             this.pnlActies.SuspendLayout();
             this.pnlEvents.SuspendLayout();
@@ -302,6 +304,8 @@ namespace Diety
             // pnlStats
             // 
             this.pnlStats.AutoSize = true;
+            this.pnlStats.Controls.Add(this.Ervaring);
+            this.pnlStats.Controls.Add(this.lblErvaring);
             this.pnlStats.Controls.Add(this.VoedselMaximum);
             this.pnlStats.Controls.Add(this.populatielimiet);
             this.pnlStats.Controls.Add(this.pictureBox4);
@@ -318,7 +322,7 @@ namespace Diety
             this.pnlStats.Controls.Add(this.AantalVolgers);
             this.pnlStats.Location = new System.Drawing.Point(12, 46);
             this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Size = new System.Drawing.Size(144, 74);
+            this.pnlStats.Size = new System.Drawing.Size(144, 99);
             this.pnlStats.TabIndex = 4;
             // 
             // VoedselMaximum
@@ -433,6 +437,24 @@ namespace Diety
             this.pnlView.TabIndex = 6;
             this.pnlView.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlViewPaint);
             // 
+            // lblErvaring
+            // 
+            this.lblErvaring.AutoSize = true;
+            this.lblErvaring.Location = new System.Drawing.Point(29, 66);
+            this.lblErvaring.Name = "lblErvaring";
+            this.lblErvaring.Size = new System.Drawing.Size(52, 13);
+            this.lblErvaring.TabIndex = 15;
+            this.lblErvaring.Text = "Ervaring :";
+            // 
+            // Ervaring
+            // 
+            this.Ervaring.AutoSize = true;
+            this.Ervaring.Location = new System.Drawing.Point(87, 68);
+            this.Ervaring.Name = "Ervaring";
+            this.Ervaring.Size = new System.Drawing.Size(13, 13);
+            this.Ervaring.TabIndex = 16;
+            this.Ervaring.Text = "0";
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -508,6 +530,8 @@ namespace Diety
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox tbxEvents;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label Ervaring;
+        private System.Windows.Forms.Label lblErvaring;
     }
 }
 

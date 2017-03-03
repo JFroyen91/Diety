@@ -10,15 +10,16 @@ namespace Diety.classes
 {
     public class Niveau : Helpers
     {
+        public bool VoorwaardenVoldaan { get; set; }
         public int Level { get; set; }
-        public int XPNodig { get; set; }
         public bool Active { get; set; }
-        public int Onderzoekslengte { get; set; }
+        public int TijdNodig { get; set; }
         public int Progress { get; set; }
         public int Niveaubonus { get; set; }
         public Enums.Bonussen Niveaubonustype { get; set; }
         public string Niveaucompletetext { get; set; }
         public string Naam { get; set; }
+        public List<Grondstof> grondstoffenNodig { get; set; }
 
         public string Complete()
         {
@@ -36,5 +37,16 @@ namespace Diety.classes
             }
             return Niveaucompletetext;
         }
+
+        public bool Checkvoorwaarden()
+        {
+            foreach (var grondstof in grondstoffenNodig)
+            {
+                if (Progress ==0 && MijnGeloof.GetGrondstof(grondstof.GrondstofType) < grondstof.Waarde)
+                    return false;
+            }
+            return true;
+        }
     }
+
 }
