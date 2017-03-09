@@ -23,18 +23,27 @@ namespace Diety.classes
 
         public string Complete()
         {
-            if (Niveaubonustype == Enums.Bonussen.VoedselVerzamelGrootte)
+            switch (Niveaubonustype)
             {
-                VoedselVerzamelGrootte += Niveaubonus;
+                case  Enums.Bonussen.VoedselVerzamelGrootte :
+                    VoedselVerzamelGrootte += Niveaubonus;
+                    break;
+                case Enums.Bonussen.VoedselVerzamelKans:
+                    VoedselVerzamelKans += Niveaubonus;
+                    break;
+                case Enums.Bonussen.VoedselOpslagGrootte:
+                    VoedselOpslagGrootte += Niveaubonus;
+                    break;
+                case Enums.Bonussen.HoutVerzamelGrootte:
+                    HoutVerzamelGrootte += Niveaubonus;
+                    break;
+                case Enums.Bonussen.HuisNiveau:
+                    HuisNiveau += Niveaubonus;
+                    break;
             }
-            if (Niveaubonustype == Enums.Bonussen.VoedselVerzamelKans)
-            {
-                VoedselVerzamelKans += Niveaubonus;
-            }
-            if (Niveaubonustype == Enums.Bonussen.VoedselOpslagGrootte)
-            {
-                VoedselOpslagGrootte += Niveaubonus;
-            }
+            
+            
+            
             return Niveaucompletetext;
         }
 

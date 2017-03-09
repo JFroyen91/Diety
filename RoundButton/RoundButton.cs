@@ -141,6 +141,21 @@ namespace GaryPerkin.UserControls.Buttons
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
 			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
         }
+        public RoundButton(int sizeX , int sizeY , int locationX , int locationY)
+        {
+            this.Location = new Point(locationX , locationY);
+            this.Name = "RoundButton";
+            this.Size = new System.Drawing.Size(sizeX, sizeY);		// Default size of control
+
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp);
+
+            this.Enter += new System.EventHandler(this.weGotFocus);
+            this.Leave += new System.EventHandler(this.weLostFocus);
+
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
+        }
 
         #region Private properties
 

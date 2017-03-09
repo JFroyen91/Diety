@@ -19,6 +19,9 @@ namespace Diety.helpers
         public static int VoedselVerzamelGrootte = 0;
         public static int VoedselVerzamelKans = 0;
         public static int VoedselOpslagGrootte = 0;
+        public static int HoutOpslagGrootte = 0;
+        public static int HoutVerzamelGrootte = 0;
+        public static int HuisNiveau = 0;
         public static int BepaalWaarde(int min, int max)
         {
             return Rand.Next(min, max);

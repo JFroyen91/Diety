@@ -20,6 +20,7 @@ namespace Diety.classes
         public Geloof Geloof { get; set; }
         public Random Randomgen { get; set; }
         public Visual Visual { get; set; }
+        public Gebouw Huis { get; set; }
 
         public Volger(int geslacht , Geloof geloof , int VisualX)
         {
@@ -37,7 +38,7 @@ namespace Diety.classes
                     ? (Enums.VolgerMan)BepaalWaarde(0, 11) + ""
                     : (Enums.VolgerVrouw)BepaalWaarde(0, 11) + "";
             Visual = new Visual(VisualX, 5, GetStat(Enums.Stats.Leven), Geslacht, Naam);
-        }
+           }
 
         public string Update()
         {
@@ -139,10 +140,19 @@ namespace Diety.classes
         public Label NaamVisueel { get; set; }
         public Image[] Images { get; set; }
         public int PictureCounter = 0;
+        public PictureBox Huis { get; set; }
 
         public Visual(int x, int y, int lengtehp, Enums.Geslacht geslacht, string naam)
         {
             Picture = new PictureBox
+            {
+                Size = new Size(50, 40),
+                BackgroundImageLayout = ImageLayout.Center,
+                Visible = true,
+                Location = new Point(x, y),
+
+            };
+            Huis = new PictureBox
             {
                 Size = new Size(50, 40),
                 BackgroundImageLayout = ImageLayout.Center,
@@ -171,8 +181,8 @@ namespace Diety.classes
                 };
             }
             Picture.Image = Images[0];
-
-        NaamVisueel = new Label{ Location =  new Point(x + 5, y + 50) ,Size = new Size(50 , 15) , Text = naam };
+            Huis.Image = Resources.Grot;
+            NaamVisueel = new Label{ Location =  new Point(x + 5, y + 50) ,Size = new Size(50 , 15) , Text = naam };
             Hp = new Rectangle { Location = new Point(x + 5, y + 75), Size = new Size(40 * lengtehp / 100, 10) };
             Honger = new Rectangle { Location = new Point(x+5, y + 90), Size = new Size(40, 10) };
             Gelovigheid = new Rectangle { Location = new Point(x + 5, y + 105), Size = new Size(40, 10) };

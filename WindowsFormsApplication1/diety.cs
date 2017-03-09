@@ -17,7 +17,9 @@ namespace Diety
 {
     public partial class Game : Helpers
     {
-        
+        private readonly System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"C:\Users\froyenjo\Documents\Visual Studio 2013\Projects\Diety\WindowsFormsApplication1\Resources\music\Fantasy.wav");
+ 
+
         public Game()
         {
             spel = this;
@@ -42,6 +44,10 @@ namespace Diety
                 {
                     lock (e)
                     {
+                        if (v.Huis != null)
+                        {
+                            e.Graphics.DrawImage(v.Visual.Huis.Image, v.Visual.Picture.Location);
+                        }
                         e.Graphics.DrawImage(v.Visual.Picture.Image, v.Visual.Picture.Location);
                         e.Graphics.FillRectangle(new SolidBrush(Color.Red), v.Visual.Hp);
                         e.Graphics.DrawRectangle(new Pen(Color.Black, 2), new Rectangle(v.Visual.Hp.Location, new Size(40, 10)));
@@ -217,7 +223,9 @@ namespace Diety
             Voedsel.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.Voedsel).ToString();
             Gebeden.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.Gebeden).ToString();
             Ervaring.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.XP).ToString();
+            Hout.Text = mijnGeloof.GetGrondstof(Enums.Grondstoffen.Hout).ToString();
             VoedselMaximum.Text = "/ " + mijnGeloof.GetGrondstof(Enums.Grondstoffen.MaxVoedsel);
+            HoutMaximum.Text = "/ " + mijnGeloof.GetGrondstof(Enums.Grondstoffen.MaxHout);
             if (vooruit)
             {
                 Tijd.Text = TijdVerstreken + "";
@@ -293,6 +301,7 @@ namespace Diety
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            player.PlayLooping();
             UpdateTimer = new Timer();
             TijdVerstreken = 0;
             UpdateTimer.Interval = 200;
@@ -308,7 +317,7 @@ namespace Diety
             pnlView.Refresh();
             UpdatePowers();
         }
-
+        #region snelheid
         private void btnPlayPause_Click(object sender, EventArgs e)
         {
             if (UpdateTimer != null)
@@ -337,7 +346,7 @@ namespace Diety
         {
             UpdateTimer.Interval += 100;
         }
-
+#endregion
         
     }
 }

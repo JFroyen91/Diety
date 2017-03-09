@@ -81,7 +81,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="classes\Power.cs" />
-    <Compile Include="classes\Technologie.cs" />
+    <Compile Include="classes\Technologie.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="diety.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,7 +146,10 @@
     <None Include="Resources\background.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Grot.png" />
     <Content Include="Resources\icons\iconclock.png" />
+    <Content Include="Resources\music\Acapella.wav" />
+    <Content Include="Resources\music\Fantasy.wav" />
     <Content Include="Resources\shamaan.png" />
     <Content Include="Resources\shamaan1.png" />
     <Content Include="Resources\shamaan2.png" />

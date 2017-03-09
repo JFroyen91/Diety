@@ -79,7 +79,9 @@ namespace Diety.classes
                 new Grondstof { GrondstofType = Enums.Grondstoffen.Gebeden, Waarde = 0 },
                 new Grondstof { GrondstofType = Enums.Grondstoffen.MaxVoedsel, Waarde = 10 },
                 new Grondstof { GrondstofType = Enums.Grondstoffen.PopulatieLimiet, Waarde = 0 },
-                new Grondstof { GrondstofType = Enums.Grondstoffen.XP, Waarde = 0 }
+                new Grondstof { GrondstofType = Enums.Grondstoffen.XP, Waarde = 0 },
+                new Grondstof { GrondstofType = Enums.Grondstoffen.Hout, Waarde = 0 },
+                new Grondstof { GrondstofType = Enums.Grondstoffen.MaxHout, Waarde = 10 }
             };
         }
 

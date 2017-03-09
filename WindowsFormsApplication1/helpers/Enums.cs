@@ -16,14 +16,17 @@
             PopulatieLimiet = 4,
             XP =5,
             Hout = 6,
-            Steen = 7
+            Steen = 7,
+            MaxHout = 8,
         }
 
         public enum Bonussen
         {
             VoedselVerzamelGrootte = 1,
             VoedselVerzamelKans = 2,
-            VoedselOpslagGrootte = 3
+            VoedselOpslagGrootte = 3,
+            HoutVerzamelGrootte = 4, 
+            HuisNiveau = 5
         }
 
         public enum Stats
@@ -31,7 +34,8 @@
             Geen = 0,
             Leven = 1,
             Honger = 2,
-            Gelovigheid = 3
+            Gelovigheid = 3,
+            Aanval = 4
         }
 
         public enum VolgerMan
@@ -84,7 +88,10 @@
         public enum Job
         {
             Geen = 0,
-            Shamaan = 1
+            Shamaan = 1,
+            Jager = 2,
+            Boer = 3 , 
+
         }
     }
 }

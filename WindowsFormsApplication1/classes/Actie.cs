@@ -21,42 +21,69 @@ namespace Diety.classes
 
         public static Actie KiesActie(Volger volger)
         {
-            var Geloof = volger.Geloof;
+            var honger = volger.GetStat(Enums.Stats.Honger);
+            var voedsel = volger.Geloof.GetGrondstof(Enums.Grondstoffen.Voedsel);
+            var keuze = BepaalWaarde(0, 100);
+
+            // probeer altijd eerst in leven te blijven
+            if (honger <= 30 && voedsel > 0) return ActieLibrary.Eet(volger);
+            // zoek een huis als dit uitgevonden is en de volger er nog geen heeft;
+            if (HuisNiveau > 0 && volger.Huis == null) return ActieLibrary.ZoekNaarHuis(volger);
+            // job specifieke acties
+            if (volger.Job == Enums.Job.Geen)
+            {
+                return KiesGewoneVolgerActie(keuze , volger);
+            }
+            if (volger.Job == Enums.Job.Shamaan)
+            {
+               return KiesShamaanActie(volger);
+            }
+            return ActieLibrary.Bid(volger);
+        }
+
+        private static Actie KiesGewoneVolgerActie(int keuze, Volger volger)
+        {
             var honger = volger.GetStat(Enums.Stats.Honger);
             var voedsel = volger.Geloof.GetGrondstof(Enums.Grondstoffen.Voedsel);
             var maxvoedsel = volger.Geloof.GetGrondstof(Enums.Grondstoffen.MaxVoedsel);
+            var hout = volger.Geloof.GetGrondstof(Enums.Grondstoffen.Hout);
+            var maxhout = volger.Geloof.GetGrondstof(Enums.Grondstoffen.MaxHout); 
             var actieveonderzoeken = volger.Geloof.Technologieen.Where(x => x.WordtOnderzocht).ToList();
-            var keuze = BepaalWaarde(0, 100);
 
-            if (volger.Job == Enums.Job.Geen)
+            if (honger <= 70)
             {
-                if (honger <= 30 && voedsel > 0)
-                    return ActieLibrary.Eet(volger);
-                if (honger <= 70 && voedsel <= maxvoedsel - VoedselVerzamelGrootte / 2)
+                if (keuze >= 0 && keuze <= 20)
                 {
-
-                    if (keuze > 90 && voedsel > 0)
-                        return ActieLibrary.Eet(volger);
-                    if (keuze < 20)
+                    if(actieveonderzoeken.Count >0)
+                     return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.ElementAt(BepaalWaarde(0,actieveonderzoeken.Count)));
+                }
+                if (keuze > 20 && keuze <= 40)
+                {
+                    if (HoutVerzamelGrootte != 0 && hout <= maxhout)
                     {
-                        if (keuze < 10 && actieveonderzoeken.Count > 0)
-                            return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.First());
+                        return ActieLibrary.ZoekNaarHout(volger);
                     }
-                    return ActieLibrary.VerzamelVoedsel(volger);
                 }
-                if (keuze < 50 && actieveonderzoeken.Count > 0)
-                    return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.First());
-              }
-            if (volger.Job == Enums.Job.Shamaan)
-            {
-                if (honger <= 30 && voedsel > 0)
-                    return ActieLibrary.Eet(volger);
-                if (Geloof.Volgers.Count(x => x.GetStat(Enums.Stats.Leven) < 100 && x.Levend) > 0 &&
-                    volger.GetStat(Enums.Stats.Gelovigheid) > 10)
+                if (voedsel < maxvoedsel)
                 {
-                    var teGenezenVolger = Geloof.Volgers.FirstOrDefault(x => x.GetStat(Enums.Stats.Leven) < 100 && x.Levend);
-                    return ActieLibrary.Genees(volger, teGenezenVolger);
+                    return ActieLibrary.ZoekNaarVoedsel(volger);
                 }
+            }
+            if (keuze <= 50 && actieveonderzoeken.Count > 0)
+                return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.ElementAt(BepaalWaarde(0, actieveonderzoeken.Count)));
+            else
+                return ActieLibrary.Bid(volger);
+        }
+
+        private static Actie KiesShamaanActie(Volger volger)
+        {
+            var Geloof = volger.Geloof;
+            
+            if (Geloof.Volgers.Count(x => x.GetStat(Enums.Stats.Leven) < 100 && x.Levend) > 0 &&
+                volger.GetStat(Enums.Stats.Gelovigheid) > 10)
+            {
+                var teGenezenVolger = Geloof.Volgers.FirstOrDefault(x => x.GetStat(Enums.Stats.Leven) < 100 && x.Levend);
+                return ActieLibrary.Genees(volger, teGenezenVolger);
             }
             return ActieLibrary.Bid(volger);
         }

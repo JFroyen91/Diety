@@ -92,6 +92,16 @@ namespace Diety.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Grot {
+            get {
+                object obj = ResourceManager.GetObject("Grot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap iconclock {
             get {
                 object obj = ResourceManager.GetObject("iconclock", resourceCulture);

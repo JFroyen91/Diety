@@ -55,6 +55,10 @@ namespace Diety
             this.tbxEvents = new System.Windows.Forms.RichTextBox();
             this.lblEvents = new System.Windows.Forms.Label();
             this.pnlStats = new System.Windows.Forms.Panel();
+            this.Hout = new System.Windows.Forms.Label();
+            this.lblHout = new System.Windows.Forms.Label();
+            this.Ervaring = new System.Windows.Forms.Label();
+            this.lblErvaring = new System.Windows.Forms.Label();
             this.VoedselMaximum = new System.Windows.Forms.Label();
             this.populatielimiet = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -66,8 +70,7 @@ namespace Diety
             this.pnlTech = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.pnlView = new Diety.helpers.DoubleBufferPanel();
-            this.lblErvaring = new System.Windows.Forms.Label();
-            this.Ervaring = new System.Windows.Forms.Label();
+            this.HoutMaximum = new System.Windows.Forms.Label();
             this.pnlMenu.SuspendLayout();
             this.pnlActies.SuspendLayout();
             this.pnlEvents.SuspendLayout();
@@ -304,6 +307,9 @@ namespace Diety
             // pnlStats
             // 
             this.pnlStats.AutoSize = true;
+            this.pnlStats.Controls.Add(this.HoutMaximum);
+            this.pnlStats.Controls.Add(this.Hout);
+            this.pnlStats.Controls.Add(this.lblHout);
             this.pnlStats.Controls.Add(this.Ervaring);
             this.pnlStats.Controls.Add(this.lblErvaring);
             this.pnlStats.Controls.Add(this.VoedselMaximum);
@@ -322,8 +328,44 @@ namespace Diety
             this.pnlStats.Controls.Add(this.AantalVolgers);
             this.pnlStats.Location = new System.Drawing.Point(12, 46);
             this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Size = new System.Drawing.Size(144, 99);
+            this.pnlStats.Size = new System.Drawing.Size(147, 141);
             this.pnlStats.TabIndex = 4;
+            // 
+            // Hout
+            // 
+            this.Hout.AutoSize = true;
+            this.Hout.Location = new System.Drawing.Point(87, 81);
+            this.Hout.Name = "Hout";
+            this.Hout.Size = new System.Drawing.Size(13, 13);
+            this.Hout.TabIndex = 18;
+            this.Hout.Text = "0";
+            // 
+            // lblHout
+            // 
+            this.lblHout.AutoSize = true;
+            this.lblHout.Location = new System.Drawing.Point(45, 79);
+            this.lblHout.Name = "lblHout";
+            this.lblHout.Size = new System.Drawing.Size(36, 13);
+            this.lblHout.TabIndex = 17;
+            this.lblHout.Text = "Hout :";
+            // 
+            // Ervaring
+            // 
+            this.Ervaring.AutoSize = true;
+            this.Ervaring.Location = new System.Drawing.Point(87, 68);
+            this.Ervaring.Name = "Ervaring";
+            this.Ervaring.Size = new System.Drawing.Size(13, 13);
+            this.Ervaring.TabIndex = 16;
+            this.Ervaring.Text = "0";
+            // 
+            // lblErvaring
+            // 
+            this.lblErvaring.AutoSize = true;
+            this.lblErvaring.Location = new System.Drawing.Point(29, 66);
+            this.lblErvaring.Name = "lblErvaring";
+            this.lblErvaring.Size = new System.Drawing.Size(52, 13);
+            this.lblErvaring.TabIndex = 15;
+            this.lblErvaring.Text = "Ervaring :";
             // 
             // VoedselMaximum
             // 
@@ -437,23 +479,14 @@ namespace Diety
             this.pnlView.TabIndex = 6;
             this.pnlView.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlViewPaint);
             // 
-            // lblErvaring
+            // HoutMaximum
             // 
-            this.lblErvaring.AutoSize = true;
-            this.lblErvaring.Location = new System.Drawing.Point(29, 66);
-            this.lblErvaring.Name = "lblErvaring";
-            this.lblErvaring.Size = new System.Drawing.Size(52, 13);
-            this.lblErvaring.TabIndex = 15;
-            this.lblErvaring.Text = "Ervaring :";
-            // 
-            // Ervaring
-            // 
-            this.Ervaring.AutoSize = true;
-            this.Ervaring.Location = new System.Drawing.Point(87, 68);
-            this.Ervaring.Name = "Ervaring";
-            this.Ervaring.Size = new System.Drawing.Size(13, 13);
-            this.Ervaring.TabIndex = 16;
-            this.Ervaring.Text = "0";
+            this.HoutMaximum.AutoSize = true;
+            this.HoutMaximum.Location = new System.Drawing.Point(123, 81);
+            this.HoutMaximum.Name = "HoutMaximum";
+            this.HoutMaximum.Size = new System.Drawing.Size(21, 13);
+            this.HoutMaximum.TabIndex = 19;
+            this.HoutMaximum.Text = "/ 0";
             // 
             // Game
             // 
@@ -532,6 +565,9 @@ namespace Diety
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label Ervaring;
         private System.Windows.Forms.Label lblErvaring;
+        private System.Windows.Forms.Label Hout;
+        private System.Windows.Forms.Label lblHout;
+        private System.Windows.Forms.Label HoutMaximum;
     }
 }
 

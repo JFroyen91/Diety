@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Diety.classes;
 using Diety.Properties;
@@ -13,12 +11,12 @@ namespace Diety.helpers
     public class ActieLibrary : Helpers
     {
         #region volgerActies
-
+        #region algemeen
         public static Actie Bid(Volger volger)
         {
             var geloofpower = 1;
             if (volger.Job == Enums.Job.Shamaan)
-                geloofpower = BepaalWaarde(2, 10);
+                geloofpower = BepaalWaarde(2, 5);
             return new Actie
             {
                 Lengte = 1,
@@ -31,34 +29,10 @@ namespace Diety.helpers
                 Cost = new List<Cost>
                 {
                     new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = BepaalWaarde(1,20) },
-                     new Cost { CostType = Enums.Stats.Gelovigheid, CostObrengstWaarde = -BepaalWaarde(1,1) }
+                     new Cost { CostType = Enums.Stats.Gelovigheid, CostObrengstWaarde = -geloofpower }
                 },
                 ActieUitvoerder = volger
             };
-        }
-        public static Actie VerzamelVoedsel(Volger volger)
-        {
-            var opbrengstwaarde = BepaalWaarde(0+VoedselVerzamelKans,100) >50 ? BepaalWaarde(0, 2 + VoedselVerzamelGrootte) : 0;
-            
-            var costwaarde = BepaalWaarde(10,30);
-            var actie = new Actie
-            {
-
-                Lengte = 1,
-                Naam = "Voedsel Verzamelen",
-                Profijt = new List<Cost>
-                {
-                    new Cost { OpbrengstType = Enums.Grondstoffen.Voedsel, CostObrengstWaarde = opbrengstwaarde },
-                    new Cost { OpbrengstType = Enums.Grondstoffen.XP, CostObrengstWaarde = 1 },
-                },
-                Cost = new List<Cost>
-                {
-                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = costwaarde }
-                },
-                Text = volger.Naam + " zoekt voedsel en heeft " + opbrengstwaarde + " voedsel verzameld",
-                ActieUitvoerder = volger
-            };
-            return actie;
         }
         public static Actie Eet(Volger volger)
         {
@@ -79,6 +53,94 @@ namespace Diety.helpers
             };
             return actie;
         }
+        public static Actie ZoekNaarHuis(Volger volger)
+        {
+            bool gelukt = BepaalWaarde(0, 100) > 50;
+            var returnActie = new Actie
+            {
+                Lengte = 1,
+                Naam = "Huis zoeken",
+                Profijt = new List<Cost> { },
+                Cost = new List<Cost>
+                {
+                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = 5 }
+                },
+                Text = gelukt ? volger.Naam + " heeft een woonplaats gevonden" : volger.Naam + "kon geen goede woonplaats vinden",
+                ActieUitvoerder = volger
+            };
+            if(gelukt)
+                switch (HuisNiveau)
+                {
+                    case 1 : 
+                        volger.Huis = new Gebouw{Naam = "woonplaats" , Gebouwlevel = new List<Niveau>{new Niveau{Naam = "Grot"}}};
+                        break;
+                    default:
+                        break;
+                }
+            return returnActie;
+        }
+        // to add
+        public static Actie Niets(Volger volger)
+        {
+            return null;
+        }
+        public static Actie Vecht(Volger volger)
+        {
+            return null;
+        }
+
+        #endregion
+        #region gewone volger
+
+       
+        public static Actie ZoekNaarVoedsel(Volger volger)
+        {
+            var opbrengstwaarde = BepaalWaarde(0+VoedselVerzamelKans,100) >50 ? BepaalWaarde(0, 2 + VoedselVerzamelGrootte) : 0;
+            
+            var costwaarde = BepaalWaarde(10,20);
+            var actie = new Actie
+            {
+
+                Lengte = 1,
+                Naam = "Voedsel Verzamelen",
+                Profijt = new List<Cost>
+                {
+                    new Cost { OpbrengstType = Enums.Grondstoffen.Voedsel, CostObrengstWaarde = opbrengstwaarde },
+                    new Cost { OpbrengstType = Enums.Grondstoffen.XP, CostObrengstWaarde = 1 },
+                },
+                Cost = new List<Cost>
+                {
+                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = costwaarde }
+                },
+                Text = volger.Naam + " zoekt voedsel en heeft " + opbrengstwaarde + " voedsel verzameld",
+                ActieUitvoerder = volger
+            };
+            return actie;
+        }
+        public static Actie ZoekNaarHout(Volger volger)
+        {
+            var opbrengstwaarde = BepaalWaarde(0 , 100) > 50 ? BepaalWaarde(0, 1 +  HoutVerzamelGrootte) : 0;
+
+            var costwaarde = BepaalWaarde(15, 25);
+            var actie = new Actie
+            {
+
+                Lengte = 1,
+                Naam = "Hout Verzamelen",
+                Profijt = new List<Cost>
+                {
+                    new Cost { OpbrengstType = Enums.Grondstoffen.Hout, CostObrengstWaarde = opbrengstwaarde },
+                    new Cost { OpbrengstType = Enums.Grondstoffen.XP, CostObrengstWaarde = 1 },
+                },
+                Cost = new List<Cost>
+                {
+                    new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = costwaarde }
+                },
+                Text = volger.Naam + " zoekt Hout en heeft " + opbrengstwaarde + " voedsel verzameld",
+                ActieUitvoerder = volger
+            };
+            return actie;
+        }      
         public static Actie DoeOnderzoek(Volger volger, Technologie tech)
         {
             var actie = new Actie
@@ -89,7 +151,7 @@ namespace Diety.helpers
                 Cost = new List<Cost>
                 {
                     new Cost { CostType = Enums.Stats.Honger, CostObrengstWaarde = BepaalWaarde(10,30) },
-                    new Cost { CostType = Enums.Stats.Gelovigheid, CostObrengstWaarde = BepaalWaarde(1,1) }
+                    new Cost { CostType = Enums.Stats.Gelovigheid, CostObrengstWaarde = BepaalWaarde(1,5) }
                 },
                 ActieUitvoerder = volger
             };
@@ -111,10 +173,11 @@ namespace Diety.helpers
             };
             return actie;
         }
-
+#endregion
+        #region Shamaan
         public static Actie Genees(Volger volger, Volger teGenezenVolger)
         {
-            teGenezenVolger.SetStat(Enums.Stats.Leven, 100);
+            teGenezenVolger.VermeerderStat(Enums.Stats.Leven, 25);
             return new Actie
             {
                 Lengte = 1,
@@ -129,8 +192,26 @@ namespace Diety.helpers
                 ActieUitvoerder = volger
             };
         }
+#endregion
+        #region Jager
+        // to add
+        public static Actie Jaag(Volger volger)
+        {
+            return null;
+        }
+        public static Actie Vis(Volger volger)
+        {
+            return null;
+        }
+#endregion
+        #region Boer
+        // to add
+        public static Actie Zaai(Volger volger)
+        {
+            return null;
+        }
         #endregion
-
+        #endregion
         #region GodActies
 
         public static void MaakShamaan(object sender, EventArgs e)
