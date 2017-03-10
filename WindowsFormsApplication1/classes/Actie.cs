@@ -23,7 +23,7 @@ namespace Diety.classes
         {
             var honger = volger.GetStat(Enums.Stats.Honger);
             var voedsel = volger.Geloof.GetGrondstof(Enums.Grondstoffen.Voedsel);
-            var keuze = BepaalWaarde(0, 100);
+            var keuze = KiesWaardeTussen(0, 100);
 
             // probeer altijd eerst in leven te blijven
             if (honger <= 30 && voedsel > 0) return ActieLibrary.Eet(volger);
@@ -55,7 +55,7 @@ namespace Diety.classes
                 if (keuze >= 0 && keuze <= 20)
                 {
                     if(actieveonderzoeken.Count >0)
-                     return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.ElementAt(BepaalWaarde(0,actieveonderzoeken.Count)));
+                     return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.ElementAt(KiesWaardeTussen(0,actieveonderzoeken.Count)));
                 }
                 if (keuze > 20 && keuze <= 40)
                 {
@@ -70,7 +70,7 @@ namespace Diety.classes
                 }
             }
             if (keuze <= 50 && actieveonderzoeken.Count > 0)
-                return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.ElementAt(BepaalWaarde(0, actieveonderzoeken.Count)));
+                return ActieLibrary.DoeOnderzoek(volger, actieveonderzoeken.ElementAt(KiesWaardeTussen(0, actieveonderzoeken.Count)));
             else
                 return ActieLibrary.Bid(volger);
         }

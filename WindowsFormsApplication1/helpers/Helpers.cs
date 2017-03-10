@@ -22,7 +22,7 @@ namespace Diety.helpers
         public static int HoutOpslagGrootte = 0;
         public static int HoutVerzamelGrootte = 0;
         public static int HuisNiveau = 0;
-        public static int BepaalWaarde(int min, int max)
+        public static int KiesWaardeTussen(int min, int max)
         {
             return Rand.Next(min, max);
         }

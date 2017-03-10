@@ -35,8 +35,8 @@ namespace Diety.classes
             Levend = true;
             Job = Enums.Job.Geen;
             Naam = Geslacht == Enums.Geslacht.Man
-                    ? (Enums.VolgerMan)BepaalWaarde(0, 11) + ""
-                    : (Enums.VolgerVrouw)BepaalWaarde(0, 11) + "";
+                    ? (Enums.VolgerMan)KiesWaardeTussen(0, 11) + ""
+                    : (Enums.VolgerVrouw)KiesWaardeTussen(0, 11) + "";
             Visual = new Visual(VisualX, 5, GetStat(Enums.Stats.Leven), Geslacht, Naam);
            }
 

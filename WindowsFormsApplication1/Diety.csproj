@@ -150,6 +150,7 @@
     <Content Include="Resources\icons\iconclock.png" />
     <Content Include="Resources\music\Acapella.wav" />
     <Content Include="Resources\music\Fantasy.wav" />
+    <Content Include="Resources\music\Woods.wav" />
     <Content Include="Resources\shamaan.png" />
     <Content Include="Resources\shamaan1.png" />
     <Content Include="Resources\shamaan2.png" />
@@ -188,6 +189,17 @@
       <Project>{7d09071c-e2ce-4289-b4bf-d3cdcf2b7ca7}</Project>
       <Name>RoundButton</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

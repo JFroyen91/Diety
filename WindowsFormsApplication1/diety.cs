@@ -17,9 +17,9 @@ namespace Diety
 {
     public partial class Game : Helpers
     {
-        private readonly System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"C:\Users\froyenjo\Documents\Visual Studio 2013\Projects\Diety\WindowsFormsApplication1\Resources\music\Fantasy.wav");
- 
-
+        private WMPLib.WindowsMediaPlayer Player;
+        private int Track  { get; set; }
+        private string musiclocation = @"C:\Users\froyenjo\Documents\Visual Studio 2013\Projects\Diety\WindowsFormsApplication1\Resources\music\";
         public Game()
         {
             spel = this;
@@ -32,6 +32,7 @@ namespace Diety
             GeloofNaam.BackColor = Color.FromArgb(0, 0, 0, 0);
             GeloofNaam.Text = "";
             Gewonnen = false;
+            Track = 0;
             Fullscreen(); 
         }
 
@@ -101,6 +102,8 @@ namespace Diety
                 tbxEvents.ScrollToCaret();
                 Gewonnen = true;
                 UpdateTimer.Stop();
+                StopPlayingSound();
+               
             }
             if (MijnGeloof == null) { return; }
             MijnGeloof.Volgers = UpdateVolgers(MijnGeloof.Volgers);
@@ -109,6 +112,8 @@ namespace Diety
             UpdatePowers();
             pnlView.Refresh();
         }
+
+        
 
         private bool Winconditie()
         {
@@ -240,6 +245,7 @@ namespace Diety
                     tbxEvents.ScrollToCaret();
                     Gewonnen = true;
                     UpdateTimer.Stop();
+                    StopPlayingSound();
                    
                 }
             }
@@ -301,7 +307,7 @@ namespace Diety
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            player.PlayLooping();
+            PlayFile("Fantasy.wav");
             UpdateTimer = new Timer();
             TijdVerstreken = 0;
             UpdateTimer.Interval = 200;
@@ -347,6 +353,41 @@ namespace Diety
             UpdateTimer.Interval += 100;
         }
 #endregion
-        
+
+        #region sound
+
+        private void PlayFile(String url)
+        {
+            url = musiclocation + url;
+            Player = new WMPLib.WindowsMediaPlayer();
+            Player.PlayStateChange += Player_PlayStateChange;
+            Player.URL = url;
+            Player.controls.play();
+        }
+        private void StopPlayingSound()
+        {
+            Player.controls.stop();
+        }
+        private void Player_PlayStateChange(int NewState)
+        {
+            Track += 1;
+            Track = Track % 3;
+            if ((WMPLib.WMPPlayState)NewState == WMPLib.WMPPlayState.wmppsMediaEnded)
+            {
+                switch (Track)
+                {
+                    case 0 :
+                        PlayFile("Woods.wav");
+                        break;
+                    case 1 :
+                        PlayFile("Acapella.wav");
+                        break;
+                    case 2:
+                        PlayFile("Fantasy.wav");
+                        break;
+                }
+            }
+        }
+        #endregion
     }
 }

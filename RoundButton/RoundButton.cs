@@ -132,18 +132,18 @@ namespace GaryPerkin.UserControls.Buttons
 			this.Name = "RoundButton";
 			this.Size = new System.Drawing.Size(50, 50);		// Default size of control
 			
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mouseDown);
-			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mouseUp);
+            this.MouseDown += this.mouseDown;
+			this.MouseUp += this.mouseUp;
 			
-			this.Enter += new System.EventHandler(this.weGotFocus);
-			this.Leave += new System.EventHandler(this.weLostFocus);
+			this.Enter += this.weGotFocus;
+			this.Leave += this.weLostFocus;
 			
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyDown);
-			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyUp);
+            this.KeyDown += this.keyDown;
+			this.KeyUp += this.keyUp;
         }
-        public RoundButton(int sizeX , int sizeY , int locationX , int locationY)
+        public RoundButton(int sizeX , int sizeY , int extraY )
         {
-            this.Location = new Point(locationX , locationY);
+            this.Location = new Point(2 , 25+extraY);
             this.Name = "RoundButton";
             this.Size = new System.Drawing.Size(sizeX, sizeY);		// Default size of control
 
